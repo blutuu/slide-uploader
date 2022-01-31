@@ -1,0 +1,16 @@
+.drag-drop {
+  #drag-drop-message {
+    display: none;
+    color: lighten($color: black, $amount: 30);
+
+    @include breakpoint(small) {
+      display: block;
+    }
+
+    > * {
+      display: block;
+      // margin: 0.35rem 0;
+      line-height: 1.35rem;
+    }
+  }
+}

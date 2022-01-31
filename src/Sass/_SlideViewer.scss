@@ -1,0 +1,22 @@
+#slide-viewer {
+  width: 80%;
+  min-width: 350px;
+  min-height: 190px;
+  margin-top: 4rem;
+  
+  @include breakpoint(mobile) {
+    width: 495px;
+    height: 262px;
+  }
+  @include breakpoint(tablet) {
+    width: 690px;
+    height: 386px;
+  }
+  @include breakpoint(small) {
+    width: 1015px;
+    height: 570px;
+    margin-top: 8rem;
+  }
+  @include breakpoint(large) {
+  }
+}

@@ -1,0 +1,11 @@
+#slide-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+
+  > .slide {
+    width: 145px;
+    height: 82px;
+  }
+}
