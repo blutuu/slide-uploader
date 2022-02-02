@@ -1,47 +1,25 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React from "react";
+import { useState, useEffect, useRef } from "react";
+import { addDropListener } from "../Utility/listeners";
+import * as handlers from "../Utility/handlers";
 
 const DragDrop = ({ children }) => {
+  const dropZone = useRef(null);
 
-  const dropHandler = (event) => {
-    event.preventDefault();
-
-    console.log('File dropped');
-  }
-
-  const dragOverHandler = (event) => {
-    event.preventDefault();
-
-    console.log('File is in the drop zone');
-  }
-
-  const dragEnterHandler = (event) => {
-    event.preventDefault();
-
-    console.log('File entered dropzone');
-  }
-
-  const dragLeaveHandler = (event) => {
-    event.preventDefault();
-
-    console.log('File exited dropzone');
-  }
+  useEffect(() => {
+    addDropListener(dropZone, handlers.dropHandler);
+  }, []);
 
   return (
-    <div className='drag-drop' >
-      <div className='drop-screen'
-        onDrop={dropHandler} 
-        onDragEnter={dragEnterHandler}
-        onDragLeave={dragLeaveHandler}>
-      </div>
+    <div className="drag-drop" ref={dropZone}>
+      <div className="drop-zone"></div>
 
       {children}
-      <div className='tc f5 mt4 mb5' id='drag-drop-message'>
+      <div className="tc f5 mt4 mb5" id="drag-drop-message">
         <strong>Click a slide to upload</strong>
         <span>or</span>
         <span>drag files here</span>
       </div>
-
     </div>
   );
 };
