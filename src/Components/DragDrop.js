@@ -1,15 +1,20 @@
 import React from "react";
-import * as handlers from "../Utility/handlers";
+import {
+  dragEnterHandler,
+  dragLeaveHandler,
+  dragOverHandler,
+  dropHandler,
+} from "../Utility/handlers";
 
 const DragDrop = ({ children }) => {
   return (
     <div className="drag-drop">
       <div
         className="drop-zone"
-        onDragEnter={handlers.dragEnterHandler}
-        onDragLeave={handlers.dragLeaveHandler}
-        onDragOver={handlers.dragOverHandler}
-        onDrop={handlers.dropHandler}
+        onDragEnter={dragEnterHandler}
+        onDragLeave={dragLeaveHandler}
+        onDragOver={dragOverHandler}
+        onDrop={dropHandler}
       ></div>
 
       {children}
