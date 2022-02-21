@@ -1,9 +1,18 @@
-import React from 'react';
+import React from "react";
+import { IconContext } from "react-icons";
+import { BiUpload } from "react-icons/bi";
 
 const Slide = () => {
   return (
-    <div className='slide ba bg-washed-blue'>
-
+    <div className="slide ba bg-washed-blue">
+      <IconContext.Provider
+        value={{
+          size: "1.5rem",
+          className: "upload-icon",
+        }}
+      >
+        <BiUpload />
+      </IconContext.Provider>
     </div>
   );
 };

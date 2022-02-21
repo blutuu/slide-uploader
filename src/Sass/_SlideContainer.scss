@@ -5,7 +5,23 @@
   gap: 1rem;
 
   > .slide {
+    position: relative;
     width: 145px;
     height: 82px;
+
+    .upload-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateX(-50%);
+      transition: .3s;
+    }
+
+    &:hover {
+      .upload-icon {
+        transform: translateX(-50%) translateY(-50%);
+        transition: .3s;
+      }
+    }
+
   }
 }

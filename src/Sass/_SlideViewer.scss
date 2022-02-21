@@ -13,10 +13,10 @@
     height: 386px;
   }
   @include breakpoint(small) {
-    width: 1015px;
-    height: 570px;
     margin-top: 8rem;
   }
   @include breakpoint(large) {
+    width: 1015px;
+    height: 570px;
   }
 }

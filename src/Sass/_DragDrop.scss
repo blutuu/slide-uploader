@@ -9,11 +9,11 @@
     height: 100%;
     background-color: lighten($oe_darkblue-alt, 65);
     opacity: 0;
-    z-index: 10;
-
     &.awaiting-drop {
       border: dashed 1rem lighten($oe_darkblue-alt, 35);
       opacity: 0.5;
+      z-index: 10;
+
     }
   }
 
