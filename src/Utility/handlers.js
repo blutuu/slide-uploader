@@ -26,13 +26,13 @@ export const dragLeaveHandler = (event) => {
   console.log("File exited ref");
 };
 
-export const dropHandler = (event) => {
+export const dropHandler = async (event) => {
   event.stopPropagation();
   event.preventDefault();
 
   const files = event.dataTransfer.items;
 
-  fileHandler(files);
+  await fileHandler(files);
 
   hideDropZone(event);
   console.log("File dropped");
@@ -47,30 +47,39 @@ export const fileHandler = (files) => {
     // Use DataTransferItemList interface to access the file(s)
     for (var i = 0; i < files.length; i++) {
       // If dropped items aren't files, reject them
-      if (files[i].kind === 'file') {
+      if (files[i].kind === "file") {
         var file = files[i].getAsFile();
-        console.log('... file[' + i + '].name = ' + file.name);
-        
-        if (file.type.startsWith("image/")) {
-          const reader = new FileReader();
-      
-          reader.readAsDataURL(file);
-          reader.onload = () => {
-            extractedFiles.push({
-              name: file.name,
-              url: reader.result
-            });
-            // console.log(`File result: ${JSON.stringify(extractedFiles)}`);
-          };
+        console.log("... file[" + i + "].name = " + file.name);
 
-          return extractedFiles;
-        }
+        new Promise((resolve, reject) => {
+          if (file.type.startsWith("image/")) {
+            let reader = new FileReader();
+
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              resolve(
+                console.log("... Resolved file[" + i + "].name = " + file.name)
+              );
+
+              extractedFiles.push({
+                name: file.name,
+                // url: reader.result
+              });
+              console.log(`File result: ${JSON.stringify(extractedFiles)}`);
+            };
+            reader.onerror = (error) => {
+              reject(error);
+            };
+          }
+        });
       }
     }
+
+    return extractedFiles;
   } else {
     // Use DataTransfer interface to access the file(s)
     for (var i = 0; i < files.length; i++) {
-      console.log('... file[' + i + '].name = ' + files[i].name);
+      console.log("... file[" + i + "].name = " + files[i].name);
     }
   }
-}
+};
