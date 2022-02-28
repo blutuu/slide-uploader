@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   dragEnterHandler,
   dragLeaveHandler,
@@ -21,7 +21,7 @@ const DragDrop = ({ children }) => {
       <div className="tc f5 mt4 mb5" id="drag-drop-message">
         <strong>Click a slide to upload</strong>
         <span>or</span>
-        <span>drag files here</span>
+        <span>drag files onto screen</span>
       </div>
     </div>
   );

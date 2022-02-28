@@ -13,6 +13,7 @@ const Slide = () => {
       >
         <BiUpload />
       </IconContext.Provider>
+      <input type="file" name="slideFile" className="slide_input" />
     </div>
   );
 };

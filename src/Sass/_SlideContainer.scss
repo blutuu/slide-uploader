@@ -12,12 +12,19 @@
     .upload-icon {
       position: absolute;
       top: 50%;
+      opacity: 0;
       transform: translateX(-50%);
       transition: .3s;
     }
 
+    .slide_input {
+      display: none;
+    }
+
     &:hover {
+      cursor: pointer;
       .upload-icon {
+        opacity: 1;
         transform: translateX(-50%) translateY(-50%);
         transition: .3s;
       }
