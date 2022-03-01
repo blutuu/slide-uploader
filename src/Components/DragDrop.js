@@ -7,6 +7,12 @@ import {
 } from "../Utility/handlers";
 
 const DragDrop = ({ children }) => {
+  const [droppedFiles, setDroppedFiles] = useState([]);
+
+  const myDropHandler = (event) => {
+    setDroppedFiles([...droppedFiles, ...dropHandler(event)]);
+  };
+
   return (
     <div className="drag-drop">
       <div
@@ -14,7 +20,7 @@ const DragDrop = ({ children }) => {
         onDragEnter={dragEnterHandler}
         onDragLeave={dragLeaveHandler}
         onDragOver={dragOverHandler}
-        onDrop={dropHandler}
+        onDrop={myDropHandler}
       ></div>
 
       {children}
