@@ -26,12 +26,10 @@ export const dragLeaveHandler = (event) => {
 export const dropHandler = (event) => {
   event.stopPropagation();
   event.preventDefault();
+  hideDropZone(event);
 
   const files = event.dataTransfer.items;
-
   let rawFileData = fileHandler(files);
-
-  hideDropZone(event);
 
   return rawFileData;
 };

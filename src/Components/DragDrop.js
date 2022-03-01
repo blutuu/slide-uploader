@@ -10,7 +10,7 @@ const DragDrop = ({ children }) => {
   const [droppedFiles, setDroppedFiles] = useState([]);
 
   const myDropHandler = (event) => {
-    setDroppedFiles([...droppedFiles, ...dropHandler(event)]);
+    setDroppedFiles([...dropHandler(event)]);
   };
 
   return (

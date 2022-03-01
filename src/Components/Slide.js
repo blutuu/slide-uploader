@@ -2,7 +2,7 @@ import React from "react";
 import { IconContext } from "react-icons";
 import { BiUpload } from "react-icons/bi";
 
-const Slide = () => {
+const Slide = ({ imageName, imageUrl }) => {
   return (
     <div className="slide ba bg-washed-blue">
       <IconContext.Provider
