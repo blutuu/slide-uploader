@@ -10,7 +10,7 @@ const DragDrop = ({ children }) => {
   const [droppedFiles, setDroppedFiles] = useState([]);
 
   const myDropHandler = (event) => {
-    setDroppedFiles([...dropHandler(event)]);
+    setDroppedFiles([...droppedFiles, ...dropHandler(event)]);
   };
 
   return (
@@ -23,7 +23,10 @@ const DragDrop = ({ children }) => {
         onDrop={myDropHandler}
       ></div>
 
-      {children}
+      {React.Children.map(children, child => {
+        return React.cloneElement(child, {droppedFiles: droppedFiles}, null);
+      })}
+
       <div className="tc f5 mt4 mb5" id="drag-drop-message">
         <strong>Click a slide to upload</strong>
         <span>or</span>
