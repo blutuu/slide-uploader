@@ -9,8 +9,13 @@ import {
 const DragDrop = ({ children }) => {
   const [droppedFiles, setDroppedFiles] = useState([]);
 
+  useEffect(() => {
+    console.log("drop rendered");
+  }, [droppedFiles]);
+
   const myDropHandler = (event) => {
     setDroppedFiles([...droppedFiles, ...dropHandler(event)]);
+    console.log(droppedFiles);
   };
 
   return (
@@ -23,8 +28,8 @@ const DragDrop = ({ children }) => {
         onDrop={myDropHandler}
       ></div>
 
-      {React.Children.map(children, child => {
-        return React.cloneElement(child, {droppedFiles: droppedFiles}, null);
+      {React.Children.map(children, (child) => {
+        return React.cloneElement(child, { droppedFiles: droppedFiles }, null);
       })}
 
       <div className="tc f5 mt4 mb5" id="drag-drop-message">

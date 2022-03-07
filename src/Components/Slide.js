@@ -15,19 +15,20 @@ const Slide = ({ imageFile }) => {
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
-    if (imageFile.name) {
+    if (Object.keys(imageFile).length != 0) {
       setImageName(imageFile.name);
       setImageUrl(imageFile.url);
+      console.log(imageFile);
+      console.log("slide rendered");
     }
-    console.log(imageFile.name);
   }, [imageFile]);
 
-  return !imageFile ? (
+  return !imageName ? (
     <h5>Loading...</h5>
   ) : (
     <SlideItem
       className="slide ba bg-washed-blue"
-      style={{ backgroundImage: `url(${imageFile.url})` }}
+      style={{ backgroundImage: `url(${imageUrl})` }}
     >
       <IconContext.Provider
         value={{
