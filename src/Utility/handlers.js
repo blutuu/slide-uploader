@@ -29,21 +29,22 @@ export const dropHandler = (event) => {
   hideDropZone(event);
 
   const files = event.dataTransfer.items;
+  event.dataTransfer.clearData();
 
   return fileHandler(files);
 };
 
-export const fileHandler = async (files) => {
+export const fileHandler = (files) => {
   let extractedData = [];
   let rawFile = {};
 
   if (files) {
     for (var i = 0; i < files.length; i++) {
-      rawFile = await extractFileData(files[i]);
-      extractedData.push();
+      extractedData.push(extractFileData(files[i]));
     }
   }
 
+  console.log("\n");
   console.log(extractedData);
 
   return extractedData;

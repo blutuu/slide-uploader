@@ -10,12 +10,15 @@ const DragDrop = ({ children }) => {
   const [droppedFiles, setDroppedFiles] = useState([]);
 
   useEffect(() => {
-    console.log("drop rendered");
+    console.log(" \ndrop rendered");
+    console.log(droppedFiles);
+
+    return () => {};
   }, [droppedFiles]);
 
   const myDropHandler = (event) => {
     setDroppedFiles([...droppedFiles, ...dropHandler(event)]);
-    console.log(droppedFiles);
+    console.log(`dragdrop: ${droppedFiles}`);
   };
 
   return (
