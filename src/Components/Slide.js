@@ -15,10 +15,11 @@ const Slide = ({ imageFile }) => {
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
-    if (Object.keys(imageFile).length != 0) {
-      setTimeout(() => {}, 1000);
-      setImageName(imageFile.name);
-      setImageUrl(imageFile.url);
+    if (Object.keys(imageFile).length !== 0) {
+      setTimeout(() => {
+        setImageName(imageFile.name);
+        setImageUrl(imageFile.url);
+      }, 1);
       console.log(`image object length: ${Object.keys(imageFile).length}`);
       console.log("slide rendered");
     }

@@ -5,6 +5,7 @@ export const extractFileData = (file) => {
   let rawFile = file.getAsFile();
 
   output.name = rawFile.name;
+  output.url = "";
 
   if (rawFile.type.startsWith("image/")) {
     let reader = new FileReader();

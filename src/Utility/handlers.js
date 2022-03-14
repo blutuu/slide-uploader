@@ -36,7 +36,6 @@ export const dropHandler = (event) => {
 
 export const fileHandler = (files) => {
   let extractedData = [];
-  let rawFile = {};
 
   if (files) {
     for (var i = 0; i < files.length; i++) {
