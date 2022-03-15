@@ -11,14 +11,20 @@ const DragDrop = ({ children }) => {
 
   useEffect(() => {
     console.log(" \ndrop rendered");
-    console.log(droppedFiles);
+    console.log(JSON.stringify(droppedFiles));
 
     return () => {};
   }, [droppedFiles]);
 
-  const myDropHandler = (event) => {
-    setDroppedFiles([...droppedFiles, ...dropHandler(event)]);
-    console.log(`dragdrop: ${droppedFiles}`);
+  const myDropHandler = async (event) => {
+    await dropHandler(event)
+      .then((data) => {
+        setDroppedFiles([...droppedFiles, ...data]);
+        console.log("Files dropped");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

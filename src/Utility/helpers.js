@@ -1,20 +1,18 @@
 export const extractFileData = (file) => {
   if (file.kind !== "file") return {};
 
-  let output = {};
   let rawFile = file.getAsFile();
 
-  output.name = rawFile.name;
-  output.url = "";
-
   if (rawFile.type.startsWith("image/")) {
+  }
+  let promise = new Promise((resolve, reject) => {
     let reader = new FileReader();
 
     reader.readAsDataURL(rawFile);
     reader.onload = () => {
-      output.url = reader.result;
+      resolve({ name: rawFile.name, url: reader.result });
     };
-  }
+  });
 
-  return output;
+  return promise;
 };

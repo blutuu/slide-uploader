@@ -31,17 +31,26 @@ export const dropHandler = (event) => {
   const files = event.dataTransfer.items;
   event.dataTransfer.clearData();
 
-  return fileHandler(files);
+  let promise = new Promise((resolve, reject) => {
+    resolve(fileHandler(files));
+  });
+
+  return promise;
 };
 
-export const fileHandler = (files) => {
+export const fileHandler = async (files) => {
   let extractedData = [];
+  let promisesToAwait = [];
 
   if (files) {
     for (var i = 0; i < files.length; i++) {
-      extractedData.push(extractFileData(files[i]));
+      promisesToAwait.push(extractFileData(files[i]));
     }
   }
+
+  await Promise.all(promisesToAwait).then((data) => {
+    extractedData.push(...data);
+  });
 
   console.log("\n");
   console.log(extractedData);

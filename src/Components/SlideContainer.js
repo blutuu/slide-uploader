@@ -7,6 +7,7 @@ const SlideContainer = ({ droppedFiles }) => {
 
   useEffect(() => {
     setImageArray(droppedFiles);
+    console.log("container rendered");
   }, [droppedFiles]);
 
   const slides = imageArray.map((image, key) => (
