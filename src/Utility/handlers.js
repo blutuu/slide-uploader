@@ -23,7 +23,7 @@ export const dragLeaveHandler = (event) => {
   hideDropZone(event);
 };
 
-export const dropHandler = (event) => {
+export const dropHandler = async (event) => {
   event.stopPropagation();
   event.preventDefault();
   hideDropZone(event);
@@ -31,11 +31,7 @@ export const dropHandler = (event) => {
   const files = event.dataTransfer.items;
   event.dataTransfer.clearData();
 
-  let promise = new Promise((resolve, reject) => {
-    resolve(fileHandler(files));
-  });
-
-  return promise;
+  return await fileHandler(files);
 };
 
 export const fileHandler = async (files) => {
