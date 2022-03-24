@@ -21,14 +21,13 @@ const Slide = ({ imageFile }) => {
       console.log(`image object length: ${Object.keys(imageFile).length}`);
       console.log("slide rendered");
     }
-
-    return () => {};
   }, [imageUrl]);
 
   return !imageName ? (
     <h5>Loading...</h5>
   ) : (
     <SlideItem
+      draggable
       className="slide ba bg-washed-blue"
       style={{ backgroundImage: `url(${imageUrl})` }}
     >

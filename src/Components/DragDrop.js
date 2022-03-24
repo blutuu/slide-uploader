@@ -1,44 +1,42 @@
 import React, { useState, useEffect } from "react";
 import {
   dragEnterHandler,
-  dragLeaveHandler,
+  dragExitHandler,
   dragOverHandler,
-  dropHandler,
 } from "../Utility/handlers";
 
-const DragDrop = ({ children }) => {
-  const [droppedFiles, setDroppedFiles] = useState([]);
+const DragDrop = ({ children, setDrag, processDrop }) => {
+  const onDragEnter = (event) => {
+    dragEnterHandler(event);
+    setDrag(true);
+  };
 
-  useEffect(() => {
-    console.log(" \ndrop rendered");
-    console.log(JSON.stringify(droppedFiles));
+  const onDragExit = (event) => {
+    dragExitHandler(event);
+    setDrag(false);
+  };
 
-    return () => {};
-  }, [droppedFiles]);
+  const onDragOver = (event) => {
+    dragOverHandler(event);
+  };
 
-  const myDropHandler = async (event) => {
-    await dropHandler(event)
-      .then((data) => {
-        setDroppedFiles([...droppedFiles, ...data]);
-        console.log("Files dropped");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const onDrop = (event) => {
+    setDrag(false);
+    processDrop(event);
   };
 
   return (
     <div className="drag-drop">
       <div
         className="drop-zone"
-        onDragEnter={dragEnterHandler}
-        onDragLeave={dragLeaveHandler}
-        onDragOver={dragOverHandler}
-        onDrop={myDropHandler}
+        onDragEnter={onDragEnter}
+        onDragLeave={onDragExit}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
       ></div>
 
       {React.Children.map(children, (child) => {
-        return React.cloneElement(child, { droppedFiles: droppedFiles }, null);
+        return React.cloneElement(child, null);
       })}
 
       <div className="tc f5 mt4 mb5" id="drag-drop-message">

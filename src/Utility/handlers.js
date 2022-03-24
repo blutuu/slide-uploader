@@ -18,7 +18,7 @@ export const dragEnterHandler = (event) => {
   showDropZone(event);
 };
 
-export const dragLeaveHandler = (event) => {
+export const dragExitHandler = (event) => {
   event.stopPropagation();
   hideDropZone(event);
 };
