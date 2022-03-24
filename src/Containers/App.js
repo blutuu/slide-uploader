@@ -22,12 +22,16 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function App({ onSetDrag, onProcessDrop, droppedFiles }) {
+function App({ onSetDrag, onProcessDrop, droppedFiles, isDragging }) {
   return (
     <div className="App" style={{ backgroundImage: `url(${bgimage})` }}>
-      <DragDrop setDrag={onSetDrag} processDrop={onProcessDrop}>
+      <DragDrop
+        setDrag={onSetDrag}
+        processDrop={onProcessDrop}
+        isDragging={isDragging}
+      >
         <SlideViewer />
-        <SlideContainer droppedFiles={droppedFiles} />
+        <SlideContainer droppedFiles={droppedFiles} isDragging={isDragging} />
       </DragDrop>
     </div>
   );

@@ -5,7 +5,7 @@ import {
   dragOverHandler,
 } from "../Utility/handlers";
 
-const DragDrop = ({ children, setDrag, processDrop }) => {
+const DragDrop = ({ children, setDrag, processDrop, isDragging }) => {
   const onDragEnter = (event) => {
     dragEnterHandler(event);
     setDrag(true);
@@ -13,7 +13,7 @@ const DragDrop = ({ children, setDrag, processDrop }) => {
 
   const onDragExit = (event) => {
     dragExitHandler(event);
-    setDrag(false);
+    // setDrag(false);
   };
 
   const onDragOver = (event) => {
@@ -21,19 +21,18 @@ const DragDrop = ({ children, setDrag, processDrop }) => {
   };
 
   const onDrop = (event) => {
-    setDrag(false);
     processDrop(event);
   };
 
   return (
-    <div className="drag-drop">
-      <div
-        className="drop-zone"
-        onDragEnter={onDragEnter}
-        onDragLeave={onDragExit}
-        onDragOver={onDragOver}
-        onDrop={onDrop}
-      ></div>
+    <div
+      className="drag-drop"
+      onDragEnter={onDragEnter}
+      onDragLeave={onDragExit}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    >
+      <div className={`drop-zone ${isDragging ? "awaiting-drop" : ""}`}></div>
 
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, null);

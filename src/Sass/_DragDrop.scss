@@ -1,7 +1,7 @@
 .drag-drop {
   position: relative;
   overflow: auto;
-  
+
   .drop-zone {
     position: fixed;
     width: 100%;
@@ -12,10 +12,8 @@
       border: dashed 1rem lighten($oe_darkblue-alt, 35);
       opacity: 0.5;
       z-index: 10;
-
     }
   }
-
 
   #drag-drop-message {
     display: none;
