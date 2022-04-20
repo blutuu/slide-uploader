@@ -13,7 +13,6 @@ const DragDrop = ({ children, setDrag, processDrop, isDragging }) => {
 
   const onDragExit = (event) => {
     dragExitHandler(event);
-    // setDrag(false);
   };
 
   const onDragOver = (event) => {

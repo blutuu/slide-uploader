@@ -42,3 +42,33 @@ export const fileHandler = async (files) => {
 
   return extractedData;
 };
+
+let active = false;
+
+export const slideMouseDown = (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+
+  active = true;
+
+  // console.log(`slide ${event.target.dataset.index} clicked`);
+  console.log(event);
+  
+};
+
+export const slideMouseUp = (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+
+  // active = false;
+}
+
+export const slideMouseMove = (event) => {
+  // event.stopPropagation();
+  event.preventDefault();
+  
+  if (active) {
+    console.log(event.clientX);
+    event.target.style.transform = `translate3d(${event.clientX - event.target.offsetLeft}px, 0px, 0)`;
+  }
+}

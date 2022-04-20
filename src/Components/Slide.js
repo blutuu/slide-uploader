@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IconContext } from "react-icons";
 import { BiUpload } from "react-icons/bi";
+import { slideMouseDown, slideMouseMove, slideMouseUp } from "../Utility/handlers";
 
 const SlideItem = styled.div`
   background-repeat: no-repeat;
@@ -10,7 +11,7 @@ const SlideItem = styled.div`
   background-position: center;
 `;
 
-const Slide = ({ imageFile }) => {
+const Slide = ({ imageFile, index }) => {
   const [imageName, setImageName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
@@ -18,7 +19,6 @@ const Slide = ({ imageFile }) => {
     if (Object.keys(imageFile).length !== 0) {
       setImageName(imageFile.name);
       setImageUrl(imageFile.url);
-      console.log(`image object length: ${Object.keys(imageFile).length}`);
       console.log("slide rendered");
     }
   }, [imageUrl]);
@@ -28,7 +28,11 @@ const Slide = ({ imageFile }) => {
   ) : (
     <SlideItem
       draggable
+      onMouseDown={slideMouseDown}
+      onMouseUp={slideMouseUp}
+      onMouseMove={slideMouseMove}
       className="slide ba bg-washed-blue"
+      data-index={index}
       style={{ backgroundImage: `url(${imageUrl})` }}
     >
       <IconContext.Provider
