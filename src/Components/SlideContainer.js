@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Slide from "./Slide";
 
-const SlideContainer = ({ droppedFiles }) => {
+const SlideContainer = ({ droppedFiles, setSlideDrag }) => {
   const [imageArray, setImageArray] = useState([]);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const SlideContainer = ({ droppedFiles }) => {
   }, [droppedFiles]);
 
   const slides = imageArray.map((image, key) => (
-    <Slide imageFile={image} key={key} index={key}/>
+    <Slide imageFile={image} key={key} index={key} setSlideDrag={setSlideDrag}/>
   ));
 
   return (

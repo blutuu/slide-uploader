@@ -6,11 +6,12 @@ import bgimage from "../Images/pattern-randomized.svg";
 import SlideViewer from "../Components/SlideViewer";
 import SlideContainer from "../Components/SlideContainer";
 import DragDrop from "../Components/DragDrop";
-import { setDrag, processDrop } from "../Redux/actions";
+import { setDrag, setSlideDrag, processDrop } from "../Redux/actions";
 
 const mapStateToProps = (state) => {
   return {
     isDragging: state.isDragging,
+    isSlideDragging: state.isSlideDragging,
     droppedFiles: state.droppedFiles,
   };
 };
@@ -18,20 +19,22 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSetDrag: (value) => dispatch(setDrag(value)),
+    onSetSlideDrag: (value) => dispatch(setSlideDrag(value)),
     onProcessDrop: (event) => processDrop(event, dispatch),
   };
 };
 
-function App({ onSetDrag, onProcessDrop, droppedFiles, isDragging }) {
+function App({ onSetDrag, onSetSlideDrag, onProcessDrop, droppedFiles, isDragging, isSlideDragging }) {
   return (
     <div className="App" style={{ backgroundImage: `url(${bgimage})` }}>
       <DragDrop
         setDrag={onSetDrag}
         processDrop={onProcessDrop}
         isDragging={isDragging}
+        isSlideDragging={isSlideDragging}
       >
         <SlideViewer />
-        <SlideContainer droppedFiles={droppedFiles} isDragging={isDragging} />
+        <SlideContainer droppedFiles={droppedFiles} isDragging={isDragging} setSlideDrag={onSetSlideDrag} />
       </DragDrop>
     </div>
   );

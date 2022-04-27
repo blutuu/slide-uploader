@@ -10,7 +10,7 @@ import reportWebVitals from "./reportWebVitals";
 
 const logger = createLogger();
 const rootReducer = handleDrop;
-const store = createStore(rootReducer, applyMiddleware(logger));
+const store = createStore(rootReducer, applyMiddleware());
 
 ReactDOM.render(
   <Provider store={store}>

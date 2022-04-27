@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   dragEnterHandler,
   dragExitHandler,
   dragOverHandler,
 } from "../Utility/handlers";
 
-const DragDrop = ({ children, setDrag, processDrop, isDragging }) => {
+const DragDrop = ({ children, setDrag, processDrop, isDragging, isSlideDragging }) => {
   const onDragEnter = (event) => {
+    if (isSlideDragging) return;
+
     dragEnterHandler(event);
     setDrag(true);
   };
@@ -20,6 +22,8 @@ const DragDrop = ({ children, setDrag, processDrop, isDragging }) => {
   };
 
   const onDrop = (event) => {
+    if (isSlideDragging) return;
+    
     processDrop(event);
   };
 
