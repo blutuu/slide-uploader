@@ -11,7 +11,13 @@ const SlideContainer = ({ droppedFiles, setSlideDrag }) => {
   }, [droppedFiles]);
 
   const slides = imageArray.map((image, key) => (
-    <Slide imageFile={image} key={key} index={key} setSlideDrag={setSlideDrag}/>
+    <Slide
+      imageFile={image}
+      key={key}
+      index={key}
+      setSlideDrag={setSlideDrag}
+      droppedFiles={droppedFiles}
+    />
   ));
 
   return (

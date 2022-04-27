@@ -7,8 +7,6 @@ import {
   slideMouseDown,
   slideMouseDrag,
   slideMouseDrop,
-  slideMouseExit,
-  slideMouseMove,
   slideMouseUp,
 } from "../Utility/handlers";
 
@@ -19,7 +17,7 @@ const SlideItem = styled.div`
   transition: 0.05s;
 `;
 
-const Slide = ({ imageFile, index, setSlideDrag }) => {
+const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
   const [imageName, setImageName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
@@ -55,8 +53,6 @@ const Slide = ({ imageFile, index, setSlideDrag }) => {
       draggable
       onMouseDown={slideMouseDown}
       onMouseUp={onMouseUp}
-      // onMouseMove={slideMouseMove}
-      // onMouseLeave={slideMouseExit}
       onDrag={onMouseDrag}
       onDragEnd={onMouseDrop}
       className="slide ba bg-washed-blue"

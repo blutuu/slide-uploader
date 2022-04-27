@@ -1,5 +1,9 @@
 import { extractFileData } from "./helpers";
 
+//
+// ─────────────────────────────────────────────────────── FILE DROP HANDLERS ─────
+//
+
 export const dragOverHandler = (event) => {
   event.stopPropagation();
   event.preventDefault();
@@ -43,14 +47,14 @@ export const fileHandler = async (files) => {
   return extractedData;
 };
 
-let active = false;
+//
+// ────────────────────────────────────────────────────── SLIDE DRAG HANDLERS ─────
+//
+
 let closest_element = "";
 
 export const slideMouseDown = (event) => {
   event.stopPropagation();
-  // event.preventDefault();
-
-  active = true;
 
   console.log("slide mouse down");
 };
@@ -60,40 +64,19 @@ export const slideMouseUp = (event) => {
   event.preventDefault();
 
   console.log("slide mouse up");
-
-  active = false;
-};
-
-export const slideMouseMove = (event) => {
-  event.stopPropagation();
-  event.preventDefault();
-
-  if (active) {
-    console.log(`offsetleft: ${event.target.offsetLeft}`);
-    event.target.style.transform = `translate3d(${
-      event.clientX - (event.target.offsetLeft + event.target.clientWidth / 2)
-    }px, 0px, 0)`;
-  }
-};
-
-export const slideMouseExit = (event) => {
-  event.stopPropagation();
-  event.preventDefault();
-
-  active = false;
-
-  console.log("slide mouse exit");
 };
 
 export const slideMouseDrag = (event) => {
   event.stopPropagation();
   event.preventDefault();
 
+  const slide_container = document.getElementById("slide-container");
   closest_element = document.elementFromPoint(event.clientX, event.clientY);
 
   event.target.style.opacity = 0;
 
   if (closest_element.classList.contains("slide")) {
+    slide_container.insertBefore(event.target, closest_element);
     console.log(closest_element.dataset.index);
   }
 };

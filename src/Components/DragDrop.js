@@ -5,7 +5,13 @@ import {
   dragOverHandler,
 } from "../Utility/handlers";
 
-const DragDrop = ({ children, setDrag, processDrop, isDragging, isSlideDragging }) => {
+const DragDrop = ({
+  children,
+  setDrag,
+  processDrop,
+  isDragging,
+  isSlideDragging,
+}) => {
   const onDragEnter = (event) => {
     if (isSlideDragging) return;
 
@@ -15,6 +21,8 @@ const DragDrop = ({ children, setDrag, processDrop, isDragging, isSlideDragging 
 
   const onDragExit = (event) => {
     dragExitHandler(event);
+
+    setDrag(false);
   };
 
   const onDragOver = (event) => {
@@ -23,7 +31,7 @@ const DragDrop = ({ children, setDrag, processDrop, isDragging, isSlideDragging 
 
   const onDrop = (event) => {
     if (isSlideDragging) return;
-    
+
     processDrop(event);
   };
 
