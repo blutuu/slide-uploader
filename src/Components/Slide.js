@@ -3,18 +3,19 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IconContext } from "react-icons";
 import { BiUpload } from "react-icons/bi";
-import {
-  slideMouseDown,
-  slideMouseDrag,
-  slideMouseDrop,
-  slideMouseUp,
-} from "../Utility/handlers";
+import { slideMouseDrag, slideMouseDrop } from "../Utility/handlers";
 
 const SlideItem = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   transition: 0.05s;
+  user-select: none;
+
+  > img {
+    height: 100%;
+    user-select: none;
+  }
 `;
 
 const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
@@ -28,12 +29,6 @@ const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
       console.log("slide rendered");
     }
   }, [imageUrl]);
-
-  const onMouseUp = (event) => {
-    setSlideDrag(false);
-
-    slideMouseUp(event);
-  };
 
   const onMouseDrag = (event) => {
     setSlideDrag(true);
@@ -51,13 +46,11 @@ const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
   ) : (
     <SlideItem
       draggable
-      onMouseDown={slideMouseDown}
-      onMouseUp={onMouseUp}
       onDrag={onMouseDrag}
       onDragEnd={onMouseDrop}
       className="slide ba bg-washed-blue"
       data-index={index}
-      style={{ backgroundImage: `url(${imageUrl})` }}
+      // style={{ backgroundImage: `url(${imageUrl})` }}
     >
       <IconContext.Provider
         value={{
@@ -67,6 +60,7 @@ const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
       >
         <BiUpload />
       </IconContext.Provider>
+      <img src={imageUrl} draggable="false" alt="" />
       <input type="file" name="slideFile" className="slide_input" />
     </SlideItem>
   );

@@ -1,4 +1,4 @@
-import { extractFileData } from "./helpers";
+import { extractFileData, fullOpacity, zeroOpacity } from "./helpers";
 
 //
 // ─────────────────────────────────────────────────────── FILE DROP HANDLERS ─────
@@ -53,27 +53,18 @@ export const fileHandler = async (files) => {
 
 let closest_element = "";
 
-export const slideMouseDown = (event) => {
-  event.stopPropagation();
-
-  console.log("slide mouse down");
-};
-
-export const slideMouseUp = (event) => {
-  event.stopPropagation();
-  event.preventDefault();
-
-  console.log("slide mouse up");
-};
-
 export const slideMouseDrag = (event) => {
   event.stopPropagation();
   event.preventDefault();
 
+  const x = event.clientX + event.target.offsetWidth / 2,
+    y = event.clientY;
   const slide_container = document.getElementById("slide-container");
-  closest_element = document.elementFromPoint(event.clientX, event.clientY);
+  closest_element = document.elementFromPoint(x, y);
 
-  event.target.style.opacity = 0;
+  console.log(x);
+
+  zeroOpacity(event);
 
   if (closest_element.classList.contains("slide")) {
     slide_container.insertBefore(event.target, closest_element);
@@ -85,6 +76,7 @@ export const slideMouseDrop = (event) => {
   event.stopPropagation();
   event.preventDefault();
 
-  event.target.style.opacity = 1;
+  fullOpacity(event);
+
   console.log("slide mouse drop");
 };
