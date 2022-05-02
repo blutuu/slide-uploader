@@ -9,7 +9,6 @@ const SlideItem = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  transition: 0.05s;
   user-select: none;
 
   > img {
@@ -50,7 +49,6 @@ const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
       onDragEnd={onMouseDrop}
       className="slide ba bg-washed-blue"
       data-index={index}
-      // style={{ backgroundImage: `url(${imageUrl})` }}
     >
       <IconContext.Provider
         value={{
