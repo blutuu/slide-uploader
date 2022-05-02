@@ -51,24 +51,29 @@ export const fileHandler = async (files) => {
 // ────────────────────────────────────────────────────── SLIDE DRAG HANDLERS ─────
 //
 
-let closest_element = "";
+let swap_element = "";
 
 export const slideMouseDrag = (event) => {
-  event.stopPropagation();
-  event.preventDefault();
+  // event.stopPropagation();
+  // event.preventDefault();
 
-  const x = event.clientX + event.target.offsetWidth / 2,
+  const x = event.clientX,
     y = event.clientY;
+  const selected_element = event.target;
   const slide_container = document.getElementById("slide-container");
-  closest_element = document.elementFromPoint(x, y);
-
-  console.log(x);
+  swap_element = document.elementFromPoint(x, y);
 
   zeroOpacity(event);
+  console.log(swap_element.dataset.index);
 
-  if (closest_element.classList.contains("slide")) {
-    slide_container.insertBefore(event.target, closest_element);
-    console.log(closest_element.dataset.index);
+  if (swap_element.classList.contains("slide")) {
+    swap_element =
+      swap_element !== selected_element.nextSibling
+        ? swap_element
+        : swap_element.nextSibling;
+
+    slide_container.insertBefore(selected_element, swap_element);
+    // console.log(swap_element.dataset.index);
   }
 };
 
