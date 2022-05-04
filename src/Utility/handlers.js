@@ -1,4 +1,4 @@
-import { extractFileData, fullOpacity, zeroOpacity } from "./helpers";
+import { extractFileData } from "./helpers";
 
 //
 // ─────────────────────────────────────────────────────── FILE DROP HANDLERS ─────
@@ -52,19 +52,23 @@ export const fileHandler = async (files) => {
 //
 
 let swap_element = "";
+let selected_element = "";
+let slide_container = "";
+let x = "";
+let y = "";
 
 export const slideMouseDrag = (event) => {
   // event.stopPropagation();
   // event.preventDefault();
 
-  const x = event.clientX,
-    y = event.clientY;
-  const selected_element = event.target;
-  const slide_container = document.getElementById("slide-container");
-  swap_element = document.elementFromPoint(x, y);
-
-  zeroOpacity(event);
-  console.log(swap_element.dataset.index);
+  x = event.clientX;
+  y = event.clientY;
+  selected_element = event.target;
+  slide_container = document.getElementById("slide-container");
+  swap_element =
+    document.elementFromPoint(x, y) === null
+      ? selected_element
+      : document.elementFromPoint(x, y);
 
   if (swap_element.classList.contains("slide")) {
     swap_element =
@@ -80,8 +84,6 @@ export const slideMouseDrag = (event) => {
 export const slideMouseDrop = (event) => {
   event.stopPropagation();
   event.preventDefault();
-
-  fullOpacity(event);
 
   console.log("slide mouse drop");
 };

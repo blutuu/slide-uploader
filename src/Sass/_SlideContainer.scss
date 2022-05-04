@@ -9,6 +9,15 @@
     width: 145px;
     height: 82px;
 
+    &.drag-active {
+      background: transparent;
+      border: 1px solid;
+
+      * {
+        display: none;
+      }
+    }
+
     .upload-icon {
       position: absolute;
       top: 50%;

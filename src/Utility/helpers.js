@@ -16,11 +16,3 @@ export const extractFileData = (file) => {
 
   return promise;
 };
-
-export const zeroOpacity = (event) => {
-  event.target.style.opacity = 0;
-};
-
-export const fullOpacity = (event) => {
-  event.target.style.opacity = 1;
-};

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { IconContext } from "react-icons";
 import { BiUpload } from "react-icons/bi";
@@ -17,9 +17,16 @@ const SlideItem = styled.div`
   }
 `;
 
-const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
+const Slide = ({
+  imageFile,
+  index,
+  setSlideDrag,
+  isSlideDragging,
+  droppedFiles,
+}) => {
   const [imageName, setImageName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const slideRef = useRef(null);
 
   useEffect(() => {
     if (Object.keys(imageFile).length !== 0) {
@@ -31,13 +38,16 @@ const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
 
   const onMouseDrag = (event) => {
     setSlideDrag(true);
-
     slideMouseDrag(event);
+
+    slideRef.current.classList.add("drag-active");
   };
 
   const onMouseDrop = (event) => {
     setSlideDrag(false);
     slideMouseDrop(event);
+
+    slideRef.current.classList.remove("drag-active");
   };
 
   return !imageName ? (
@@ -47,8 +57,9 @@ const Slide = ({ imageFile, index, setSlideDrag, droppedFiles }) => {
       draggable
       onDrag={onMouseDrag}
       onDragEnd={onMouseDrop}
-      className="slide ba bg-washed-blue"
+      className={`slide ba bg-washed-blue`}
       data-index={index}
+      ref={slideRef}
     >
       <IconContext.Provider
         value={{

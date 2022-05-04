@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Slide from "./Slide";
 
-const SlideContainer = ({ droppedFiles, setSlideDrag }) => {
+const SlideContainer = ({ droppedFiles, setSlideDrag, isSlideDragging }) => {
   const [imageArray, setImageArray] = useState([]);
 
   useEffect(() => {
@@ -17,6 +17,7 @@ const SlideContainer = ({ droppedFiles, setSlideDrag }) => {
       index={key}
       setSlideDrag={setSlideDrag}
       droppedFiles={droppedFiles}
+      isSlideDragging={isSlideDragging}
     />
   ));
 
