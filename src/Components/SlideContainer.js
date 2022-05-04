@@ -9,7 +9,6 @@ const SlideContainer = ({ droppedFiles, setSlideDrag, isSlideDragging }) => {
     setImageArray(droppedFiles);
     console.log("container rendered");
   }, [droppedFiles]);
-
   const slides = imageArray.map((image, key) => (
     <Slide
       imageFile={image}

@@ -77,7 +77,6 @@ export const slideMouseDrag = (event) => {
         : swap_element.nextSibling;
 
     slide_container.insertBefore(selected_element, swap_element);
-    // console.log(swap_element.dataset.index);
   }
 };
 
