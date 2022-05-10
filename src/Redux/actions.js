@@ -4,6 +4,7 @@ import {
   SET_SLIDE_DRAG,
   PROCESS_FILE_DROP_SUCCESS,
   PROCESS_FILE_DROP_FAILED,
+  UPDATE_SLIDE_FILES,
 } from "./constants";
 
 export const setDrag = (value) => ({
@@ -30,3 +31,8 @@ export const processDrop = (event, dispatch) =>
         payload: error,
       })
     );
+
+export const updateSlideFiles = (value) => ({
+  type: UPDATE_SLIDE_FILES,
+  payload: value,
+});

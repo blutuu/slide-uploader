@@ -3,6 +3,7 @@ import {
   SET_SLIDE_DRAG,
   PROCESS_FILE_DROP_SUCCESS,
   PROCESS_FILE_DROP_FAILED,
+  UPDATE_SLIDE_FILES,
 } from "./constants";
 
 const initialStateDragDrop = {
@@ -12,7 +13,7 @@ const initialStateDragDrop = {
   error: "",
 };
 
-export const handleDrop = (state = initialStateDragDrop, action = {}) => {
+export const slideReducer = (state = initialStateDragDrop, action = {}) => {
   switch (action.type) {
     case SET_DRAG:
       return Object.assign({}, state, {
@@ -34,6 +35,11 @@ export const handleDrop = (state = initialStateDragDrop, action = {}) => {
       return Object.assign({}, state, {
         isDragging: false,
         error: action.payload,
+      });
+
+    case UPDATE_SLIDE_FILES:
+      return Object.assign({}, state, {
+        droppedFiles: action.payload,
       });
 
     default:

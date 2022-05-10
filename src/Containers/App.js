@@ -6,7 +6,12 @@ import bgimage from "../Images/pattern-randomized.svg";
 import SlideViewer from "../Components/SlideViewer";
 import SlideContainer from "../Components/SlideContainer";
 import DragDrop from "../Components/DragDrop";
-import { setDrag, setSlideDrag, processDrop } from "../Redux/actions";
+import {
+  setDrag,
+  setSlideDrag,
+  processDrop,
+  updateSlideFiles,
+} from "../Redux/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -21,6 +26,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetDrag: (value) => dispatch(setDrag(value)),
     onSetSlideDrag: (value) => dispatch(setSlideDrag(value)),
     onProcessDrop: (event) => processDrop(event, dispatch),
+    onUpdateFiles: (value) => dispatch(updateSlideFiles(value)),
   };
 };
 
@@ -28,6 +34,7 @@ function App({
   onSetDrag,
   onSetSlideDrag,
   onProcessDrop,
+  onUpdateFiles,
   droppedFiles,
   isDragging,
   isSlideDragging,
@@ -46,6 +53,7 @@ function App({
           isDragging={isDragging}
           setSlideDrag={onSetSlideDrag}
           isSlideDragging={isSlideDragging}
+          onUpdateFiles={onUpdateFiles}
         />
       </DragDrop>
     </div>

@@ -4,6 +4,12 @@ import styled from "styled-components";
 import { IconContext } from "react-icons";
 import { BiUpload } from "react-icons/bi";
 import { slideMouseDrag, slideMouseDrop } from "../Utility/handlers";
+import {
+  getSlideIndex,
+  getSlidePosition,
+  moveArrayElement,
+  setSlideIndex,
+} from "../Utility/helpers";
 
 const SlideItem = styled.div`
   background-repeat: no-repeat;
@@ -23,18 +29,27 @@ const Slide = ({
   setSlideDrag,
   isSlideDragging,
   droppedFiles,
+  updateFiles,
 }) => {
   const [imageName, setImageName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [oldSlidePosition, setOldSlidePosition] = useState("");
+  const [newSlidePosition, setNewSlidePosition] = useState("");
   const slideRef = useRef(null);
 
   useEffect(() => {
     if (Object.keys(imageFile).length !== 0) {
       setImageName(imageFile.name);
       setImageUrl(imageFile.url);
+
       console.log("slide rendered");
     }
-  }, [imageUrl]);
+  }, [imageUrl, oldSlidePosition, JSON.stringify(droppedFiles)]);
+
+  const onMouseDown = (event) => {
+    setOldSlidePosition(getSlidePosition(slideRef.current));
+    console.log(oldSlidePosition);
+  };
 
   const onMouseDrag = (event) => {
     setSlideDrag(true);
@@ -44,9 +59,20 @@ const Slide = ({
   };
 
   const onMouseDrop = (event) => {
+    let tempFileArray = droppedFiles;
+    setNewSlidePosition(getSlidePosition(slideRef.current));
+
+    console.log(
+      `slide index: ${oldSlidePosition}, slide position: ${newSlidePosition}`
+    );
+
+    moveArrayElement(tempFileArray, oldSlidePosition, newSlidePosition);
+    console.log(tempFileArray);
+
+    updateFiles(tempFileArray);
+
     setSlideDrag(false);
     slideMouseDrop(event);
-
     slideRef.current.classList.remove("drag-active");
   };
 
@@ -55,6 +81,7 @@ const Slide = ({
   ) : (
     <SlideItem
       draggable
+      onMouseDown={onMouseDown}
       onDrag={onMouseDrag}
       onDragEnd={onMouseDrop}
       className={`slide ba bg-washed-blue`}

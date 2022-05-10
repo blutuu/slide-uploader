@@ -58,9 +58,6 @@ let x = "";
 let y = "";
 
 export const slideMouseDrag = (event) => {
-  // event.stopPropagation();
-  // event.preventDefault();
-
   x = event.clientX;
   y = event.clientY;
   selected_element = event.target;
@@ -83,6 +80,4 @@ export const slideMouseDrag = (event) => {
 export const slideMouseDrop = (event) => {
   event.stopPropagation();
   event.preventDefault();
-
-  console.log("slide mouse drop");
 };

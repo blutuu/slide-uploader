@@ -5,11 +5,11 @@ import { createStore, applyMiddleware } from "redux";
 import { createLogger } from "redux-logger";
 import "./index.css";
 import App from "./Containers/App";
-import { handleDrop } from "./Redux/reducers";
+import { slideReducer } from "./Redux/reducers";
 import reportWebVitals from "./reportWebVitals";
 
 const logger = createLogger();
-const rootReducer = handleDrop;
+const rootReducer = slideReducer;
 const store = createStore(rootReducer, applyMiddleware());
 
 ReactDOM.render(
