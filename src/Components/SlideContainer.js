@@ -10,7 +10,7 @@ const SlideContainer = ({
 }) => {
   useEffect(() => {
     console.log("container rendered");
-  }, [JSON.stringify(droppedFiles)]);
+  }, []);
 
   const slides = droppedFiles.map((image, key) => (
     <Slide

@@ -4,12 +4,7 @@ import styled from "styled-components";
 import { IconContext } from "react-icons";
 import { BiUpload } from "react-icons/bi";
 import { slideMouseDrag, slideMouseDrop } from "../Utility/handlers";
-import {
-  getSlideIndex,
-  getSlidePosition,
-  moveArrayElement,
-  setSlideIndex,
-} from "../Utility/helpers";
+import { getSlidePosition, moveArrayElement } from "../Utility/helpers";
 
 const SlideItem = styled.div`
   background-repeat: no-repeat;
@@ -31,48 +26,37 @@ const Slide = ({
   droppedFiles,
   updateFiles,
 }) => {
-  const [imageName, setImageName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [oldSlidePosition, setOldSlidePosition] = useState("");
-  const [newSlidePosition, setNewSlidePosition] = useState("");
+  const [imageName] = useState(imageFile.name);
+  const [imageUrl] = useState(imageFile.url);
+  const [oldSlidePosition, setOldSlidePosition] = useState(0);
+  const [newSlidePosition, setNewSlidePosition] = useState(0);
+  const [tempFileArray, setTempFileArray] = useState([]);
   const slideRef = useRef(null);
 
   useEffect(() => {
-    if (Object.keys(imageFile).length !== 0) {
-      setImageName(imageFile.name);
-      setImageUrl(imageFile.url);
+    setTempFileArray([...droppedFiles]);
 
-      console.log("slide rendered");
-    }
-  }, [imageUrl, oldSlidePosition, JSON.stringify(droppedFiles)]);
+    console.log("slide rendered");
+  }, [imageUrl, droppedFiles]);
 
-  const onMouseDown = (event) => {
+  const onMouseDown = () => {
     setOldSlidePosition(getSlidePosition(slideRef.current));
-    console.log(oldSlidePosition);
+    setTempFileArray([...droppedFiles]);
   };
 
   const onMouseDrag = (event) => {
     setSlideDrag(true);
     slideMouseDrag(event);
+    setNewSlidePosition(getSlidePosition(slideRef.current));
 
     slideRef.current.classList.add("drag-active");
   };
 
   const onMouseDrop = (event) => {
-    let tempFileArray = droppedFiles;
-    setNewSlidePosition(getSlidePosition(slideRef.current));
-
-    console.log(
-      `slide index: ${oldSlidePosition}, slide position: ${newSlidePosition}`
-    );
-
     moveArrayElement(tempFileArray, oldSlidePosition, newSlidePosition);
-    console.log(tempFileArray);
-
-    updateFiles(tempFileArray);
-
     setSlideDrag(false);
     slideMouseDrop(event);
+
     slideRef.current.classList.remove("drag-active");
   };
 
