@@ -1,8 +1,11 @@
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import "animate.css";
+import { Icon } from "@iconify/react";
 import { IconContext } from "react-icons";
 import { BiUpload } from "react-icons/bi";
+import { RiCloseCircleFill } from "react-icons/ri";
 import { slideMouseDrag, slideMouseDrop } from "../Utility/handlers";
 import { getSlidePosition, moveArrayElement } from "../Utility/helpers";
 
@@ -32,12 +35,13 @@ const Slide = ({
   const [newSlidePosition, setNewSlidePosition] = useState(0);
   const [tempFileArray, setTempFileArray] = useState([]);
   const slideRef = useRef(null);
+  const deleteButtonRef = useRef(null);
 
   useEffect(() => {
     setTempFileArray([...droppedFiles]);
 
     console.log("slide rendered");
-  }, [imageUrl, droppedFiles]);
+  }, [imageUrl, JSON.stringify(droppedFiles)]);
 
   const onMouseDown = () => {
     setOldSlidePosition(getSlidePosition(slideRef.current));
@@ -54,10 +58,20 @@ const Slide = ({
 
   const onMouseDrop = (event) => {
     moveArrayElement(tempFileArray, oldSlidePosition, newSlidePosition);
+    updateFiles(tempFileArray);
     setSlideDrag(false);
     slideMouseDrop(event);
 
     slideRef.current.classList.remove("drag-active");
+  };
+
+  const onDelete = (event) => {
+    slideRef.current.style.setProperty("--animate-duration", "0.75s");
+    slideRef.current.classList.add("animate__fadeOutDown");
+  };
+
+  const onAnimationEnd = (event) => {
+    event.target.classList.remove("animate__fadeOutDown");
   };
 
   return !imageName ? (
@@ -68,9 +82,10 @@ const Slide = ({
       onMouseDown={onMouseDown}
       onDrag={onMouseDrag}
       onDragEnd={onMouseDrop}
-      className={`slide ba bg-washed-blue`}
+      className={`slide ba bg-washed-blue animate__animated`}
       data-index={index}
       ref={slideRef}
+      onAnimationEnd={onAnimationEnd}
     >
       <IconContext.Provider
         value={{
@@ -80,6 +95,15 @@ const Slide = ({
       >
         <BiUpload />
       </IconContext.Provider>
+      <Icon
+        icon="ri:close-circle-fill"
+        width="1.5rem"
+        height="1.5rem"
+        className="delete-icon"
+        ref={deleteButtonRef}
+        onClick={onDelete}
+      />
+
       <img src={imageUrl} draggable="false" alt="" />
       <input type="file" name="slideFile" className="slide_input" />
     </SlideItem>
