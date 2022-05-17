@@ -10,7 +10,7 @@ const SlideContainer = ({
   onDeleteSlide,
 }) => {
   useEffect(() => {
-    console.log("container rendered");
+    // console.log(droppedFiles);
   }, [JSON.stringify(droppedFiles)]);
 
   const slides = droppedFiles.map((image, key) => (
@@ -28,6 +28,7 @@ const SlideContainer = ({
 
   return (
     <div className="w-75 center mb4" id="slide-container">
+      {/* {console.log(`container rendered`)} */}
       {!droppedFiles ? <h2>No files available</h2> : slides}
     </div>
   );

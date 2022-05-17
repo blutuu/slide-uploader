@@ -45,9 +45,11 @@ const Slide = ({
 
     // setImageName(imageFile.name);
     // setImageUrl(imageFile.url);
-    setIsSlideDeleted(false);
 
-    console.log("slide rendered");
+    // console.log(`slide rendered ${index}`);
+    // console.log(`\tprop: ${imageFile.name}`);
+    // console.log(`\tstate: ${imageName}`);
+    setIsSlideDeleted(false);
   }, [imageUrl, JSON.stringify(droppedFiles)]);
 
   const onMouseDown = () => {
@@ -88,7 +90,7 @@ const Slide = ({
 
     event.target.classList.remove("animate__fadeOutDown");
   };
-
+  const imgsrc = isSlideDeleted ? imageName : imageFile.name;
   return !imageName ? (
     <h5>Loading...</h5>
   ) : (
@@ -118,8 +120,13 @@ const Slide = ({
         ref={deleteButtonRef}
         onClick={onDelete}
       />
-
-      <img src={imageUrl} draggable="false" alt="" />
+      {console.log(isSlideDeleted)}
+      {console.log(index + " " + imageName)}
+      <img
+        src={isSlideDeleted ? imageUrl : imageFile.url}
+        draggable="false"
+        alt=""
+      />
       <input type="file" name="slideFile" className="slide_input" />
     </SlideItem>
   );
