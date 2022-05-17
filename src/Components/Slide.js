@@ -5,7 +5,6 @@ import "animate.css";
 import { Icon } from "@iconify/react";
 import { IconContext } from "react-icons";
 import { BiUpload } from "react-icons/bi";
-import { RiCloseCircleFill } from "react-icons/ri";
 import { slideMouseDrag, slideMouseDrop } from "../Utility/handlers";
 import { getSlidePosition, moveArrayElement } from "../Utility/helpers";
 
@@ -28,17 +27,25 @@ const Slide = ({
   isSlideDragging,
   droppedFiles,
   updateFiles,
+  deleteSlide,
 }) => {
-  const [imageName] = useState(imageFile.name);
-  const [imageUrl] = useState(imageFile.url);
+  const [imageName, setImageName] = useState(imageFile.name);
+  const [imageUrl, setImageUrl] = useState(imageFile.url);
   const [oldSlidePosition, setOldSlidePosition] = useState(0);
   const [newSlidePosition, setNewSlidePosition] = useState(0);
   const [tempFileArray, setTempFileArray] = useState([]);
+  const [isSlideDeleted, setIsSlideDeleted] = useState(false);
   const slideRef = useRef(null);
   const deleteButtonRef = useRef(null);
 
   useEffect(() => {
     setTempFileArray([...droppedFiles]);
+
+    // if (!isSlideDeleted) return;
+
+    // setImageName(imageFile.name);
+    // setImageUrl(imageFile.url);
+    setIsSlideDeleted(false);
 
     console.log("slide rendered");
   }, [imageUrl, JSON.stringify(droppedFiles)]);
@@ -50,6 +57,7 @@ const Slide = ({
 
   const onMouseDrag = (event) => {
     setSlideDrag(true);
+
     slideMouseDrag(event);
     setNewSlidePosition(getSlidePosition(slideRef.current));
 
@@ -65,12 +73,19 @@ const Slide = ({
     slideRef.current.classList.remove("drag-active");
   };
 
-  const onDelete = (event) => {
+  const onDelete = () => {
+    setIsSlideDeleted(true);
     slideRef.current.style.setProperty("--animate-duration", "0.75s");
     slideRef.current.classList.add("animate__fadeOutDown");
   };
 
   const onAnimationEnd = (event) => {
+    deleteSlide(
+      droppedFiles.filter((slide, index) => {
+        return index !== getSlidePosition(event.target);
+      })
+    );
+
     event.target.classList.remove("animate__fadeOutDown");
   };
 

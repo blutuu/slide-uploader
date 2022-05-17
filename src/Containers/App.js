@@ -11,6 +11,7 @@ import {
   setSlideDrag,
   processDrop,
   updateSlideFiles,
+  deleteSlide,
 } from "../Redux/actions";
 
 const mapStateToProps = (state) => {
@@ -27,6 +28,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetSlideDrag: (value) => dispatch(setSlideDrag(value)),
     onProcessDrop: (event) => processDrop(event, dispatch),
     onUpdateFiles: (value) => dispatch(updateSlideFiles(value)),
+    onDeleteSlide: (value) => dispatch(deleteSlide(value)),
   };
 };
 
@@ -38,6 +40,7 @@ function App({
   droppedFiles,
   isDragging,
   isSlideDragging,
+  onDeleteSlide,
 }) {
   return (
     <div className="App" style={{ backgroundImage: `url(${bgimage})` }}>
@@ -54,6 +57,7 @@ function App({
           setSlideDrag={onSetSlideDrag}
           isSlideDragging={isSlideDragging}
           onUpdateFiles={onUpdateFiles}
+          onDeleteSlide={onDeleteSlide}
         />
       </DragDrop>
     </div>

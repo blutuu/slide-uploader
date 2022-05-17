@@ -4,6 +4,7 @@ import {
   PROCESS_FILE_DROP_SUCCESS,
   PROCESS_FILE_DROP_FAILED,
   UPDATE_SLIDE_FILES,
+  DELETE_SLIDE,
 } from "./constants";
 
 const initialStateDragDrop = {
@@ -41,6 +42,9 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
       return Object.assign({}, state, {
         droppedFiles: action.payload,
       });
+
+    case DELETE_SLIDE:
+      return Object.assign({}, state, { droppedFiles: action.payload });
 
     default:
       return state;

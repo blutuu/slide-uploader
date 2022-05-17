@@ -7,10 +7,11 @@ const SlideContainer = ({
   setSlideDrag,
   isSlideDragging,
   onUpdateFiles,
+  onDeleteSlide,
 }) => {
   useEffect(() => {
     console.log("container rendered");
-  }, []);
+  }, [JSON.stringify(droppedFiles)]);
 
   const slides = droppedFiles.map((image, key) => (
     <Slide
@@ -21,6 +22,7 @@ const SlideContainer = ({
       droppedFiles={droppedFiles}
       isSlideDragging={isSlideDragging}
       updateFiles={onUpdateFiles}
+      deleteSlide={onDeleteSlide}
     />
   ));
 

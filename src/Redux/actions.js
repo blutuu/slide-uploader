@@ -5,6 +5,7 @@ import {
   PROCESS_FILE_DROP_SUCCESS,
   PROCESS_FILE_DROP_FAILED,
   UPDATE_SLIDE_FILES,
+  DELETE_SLIDE,
 } from "./constants";
 
 export const setDrag = (value) => ({
@@ -34,5 +35,10 @@ export const processDrop = (event, dispatch) =>
 
 export const updateSlideFiles = (value) => ({
   type: UPDATE_SLIDE_FILES,
+  payload: value,
+});
+
+export const deleteSlide = (value) => ({
+  type: DELETE_SLIDE,
   payload: value,
 });
