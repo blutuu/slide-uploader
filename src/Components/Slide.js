@@ -29,8 +29,8 @@ const Slide = ({
   updateFiles,
   deleteSlide,
 }) => {
-  const [imageName, setImageName] = useState(imageFile.name);
-  const [imageUrl, setImageUrl] = useState(imageFile.url);
+  const [imageName, setImageName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [oldSlidePosition, setOldSlidePosition] = useState(0);
   const [newSlidePosition, setNewSlidePosition] = useState(0);
   const [tempFileArray, setTempFileArray] = useState([]);
@@ -41,32 +41,37 @@ const Slide = ({
   useEffect(() => {
     setTempFileArray([...droppedFiles]);
 
-    // if (!isSlideDeleted) return;
+    if (isSlideDeleted) {
+      setIsSlideDeleted(false);
+      return;
+    }
 
-    // setImageName(imageFile.name);
-    // setImageUrl(imageFile.url);
-
-    // console.log(`slide rendered ${index}`);
-    // console.log(`\tprop: ${imageFile.name}`);
-    // console.log(`\tstate: ${imageName}`);
-    setIsSlideDeleted(false);
-  }, [imageUrl, JSON.stringify(droppedFiles)]);
+    console.log(`slide ${index + 1} rendered`);
+    console.log(`\tprop: ${imageFile.name}`);
+    console.log(`\tstate: ${imageName}`);
+    updateSlideState();
+  }, [imageFile.name, JSON.stringify(droppedFiles)]);
 
   const onMouseDown = () => {
     setOldSlidePosition(getSlidePosition(slideRef.current));
     setTempFileArray([...droppedFiles]);
+    console.log(getSlidePosition(slideRef.current));
   };
 
   const onMouseDrag = (event) => {
-    setSlideDrag(true);
-
     slideMouseDrag(event);
     setNewSlidePosition(getSlidePosition(slideRef.current));
 
     slideRef.current.classList.add("drag-active");
+
+    if (isSlideDragging) return;
+
+    setSlideDrag(true);
   };
 
   const onMouseDrop = (event) => {
+    console.log("slide dropped");
+
     moveArrayElement(tempFileArray, oldSlidePosition, newSlidePosition);
     updateFiles(tempFileArray);
     setSlideDrag(false);
@@ -90,7 +95,20 @@ const Slide = ({
 
     event.target.classList.remove("animate__fadeOutDown");
   };
-  const imgsrc = isSlideDeleted ? imageName : imageFile.name;
+
+  const updateSlideState = () => {
+    const slidePosition = slideRef.current
+      ? getSlidePosition(slideRef.current)
+      : null;
+    const element = slidePosition ? droppedFiles[slidePosition] : imageFile;
+    console.log(slidePosition);
+
+    console.log(element);
+
+    setImageName(element.name);
+    setImageUrl(element.url);
+  };
+
   return !imageName ? (
     <h5>Loading...</h5>
   ) : (
@@ -120,13 +138,7 @@ const Slide = ({
         ref={deleteButtonRef}
         onClick={onDelete}
       />
-      {console.log(isSlideDeleted)}
-      {console.log(index + " " + imageName)}
-      <img
-        src={isSlideDeleted ? imageUrl : imageFile.url}
-        draggable="false"
-        alt=""
-      />
+      <img src={imageUrl} draggable="false" alt="" />
       <input type="file" name="slideFile" className="slide_input" />
     </SlideItem>
   );
