@@ -46,16 +46,16 @@ const Slide = ({
       return;
     }
 
+    updateSlideState();
     console.log(`slide ${index + 1} rendered`);
     console.log(`\tprop: ${imageFile.name}`);
     console.log(`\tstate: ${imageName}`);
-    updateSlideState();
   }, [imageFile.name, JSON.stringify(droppedFiles)]);
 
   const onMouseDown = () => {
     setOldSlidePosition(getSlidePosition(slideRef.current));
     setTempFileArray([...droppedFiles]);
-    console.log(getSlidePosition(slideRef.current));
+    console.log(`old slide pos: ${getSlidePosition(slideRef.current)}`);
   };
 
   const onMouseDrag = (event) => {
@@ -84,6 +84,13 @@ const Slide = ({
     setIsSlideDeleted(true);
     slideRef.current.style.setProperty("--animate-duration", "0.75s");
     slideRef.current.classList.add("animate__fadeOutDown");
+
+    // Setting current slide image info to next slide since the slide components seem to take the state of the previous component upon deletion. This is a work around.
+    const slidePosition = getSlidePosition(slideRef.current);
+
+    if (droppedFiles.length <= 1) return;
+    setImageName(droppedFiles[slidePosition + 1].name);
+    setImageUrl(droppedFiles[slidePosition + 1].url);
   };
 
   const onAnimationEnd = (event) => {
@@ -100,13 +107,11 @@ const Slide = ({
     const slidePosition = slideRef.current
       ? getSlidePosition(slideRef.current)
       : null;
-    const element = slidePosition ? droppedFiles[slidePosition] : imageFile;
-    console.log(slidePosition);
+    const currentFile =
+      slidePosition != null ? droppedFiles[slidePosition] : imageFile;
 
-    console.log(element);
-
-    setImageName(element.name);
-    setImageUrl(element.url);
+    setImageName(currentFile.name);
+    setImageUrl(currentFile.url);
   };
 
   return !imageName ? (
@@ -138,8 +143,16 @@ const Slide = ({
         ref={deleteButtonRef}
         onClick={onDelete}
       />
-      <img src={imageUrl} draggable="false" alt="" />
+      <img
+        src={!isSlideDeleted ? imageUrl : imageFile.url}
+        draggable="false"
+        alt=""
+      />
       <input type="file" name="slideFile" className="slide_input" />
+      <h4 style={{ position: "absolute", top: "80%" }}>
+        prop: {imageFile.name}
+      </h4>
+      <h4 style={{ position: "absolute", top: "-50%" }}>state: {imageName}</h4>
     </SlideItem>
   );
 };

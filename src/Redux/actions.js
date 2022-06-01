@@ -6,6 +6,7 @@ import {
   PROCESS_FILE_DROP_FAILED,
   UPDATE_SLIDE_FILES,
   DELETE_SLIDE,
+  SET_SLIDE_DELETED,
 } from "./constants";
 
 export const setDrag = (value) => ({
@@ -40,5 +41,10 @@ export const updateSlideFiles = (value) => ({
 
 export const deleteSlide = (value) => ({
   type: DELETE_SLIDE,
+  payload: value,
+});
+
+export const setSlideDeleted = (value) => ({
+  type: SET_SLIDE_DELETED,
   payload: value,
 });
