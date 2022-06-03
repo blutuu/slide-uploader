@@ -149,10 +149,28 @@ const Slide = ({
         alt=""
       />
       <input type="file" name="slideFile" className="slide_input" />
-      <h4 style={{ position: "absolute", top: "80%" }}>
+      <h4
+        style={{
+          position: "absolute",
+          top: "80%",
+          width: "140px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+      >
         prop: {imageFile.name}
       </h4>
-      <h4 style={{ position: "absolute", top: "-50%" }}>state: {imageName}</h4>
+      <h4
+        style={{
+          position: "absolute",
+          top: "-50%",
+          width: "140px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+      >
+        state: {imageName}
+      </h4>
     </SlideItem>
   );
 };
