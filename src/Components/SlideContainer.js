@@ -16,21 +16,20 @@ const SlideContainer = ({
   const slides = droppedFiles.map((image, key) => (
     <Slide
       imageFile={image}
-      key={key}
+      key={image.name}
       index={key}
       setSlideDrag={setSlideDrag}
       droppedFiles={droppedFiles}
       isSlideDragging={isSlideDragging}
       updateFiles={onUpdateFiles}
       deleteSlide={onDeleteSlide}
-    >
-      {console.log(`container rendered `)}
-    </Slide>
+    ></Slide>
   ));
 
   return (
     <div className="w-75 center mb4" id="slide-container">
       {!droppedFiles ? <h2>No files available</h2> : slides}
+      {console.log(`container rendered `)}
     </div>
   );
 };

@@ -38,19 +38,19 @@ const Slide = ({
   const slideRef = useRef(null);
   const deleteButtonRef = useRef(null);
 
-  useEffect(() => {
-    setTempFileArray([...droppedFiles]);
+  // useEffect(() => {
+  //   setTempFileArray([...droppedFiles]);
 
-    if (isSlideDeleted) {
-      setIsSlideDeleted(false);
-      return;
-    }
+  //   if (isSlideDeleted) {
+  //     setIsSlideDeleted(false);
+  //     return;
+  //   }
 
-    updateSlideState();
-    console.log(`slide ${index + 1} rendered`);
-    console.log(`\tprop: ${imageFile.name}`);
-    console.log(`\tstate: ${imageName}`);
-  }, [imageFile.name, JSON.stringify(droppedFiles)]);
+  //   updateSlideState();
+  //   console.log(`slide ${index + 1} rendered`);
+  //   console.log(`\tprop: ${imageFile.name}`);
+  //   console.log(`\tstate: ${imageName}`);
+  // }, [imageFile.name, JSON.stringify(droppedFiles)]);
 
   const onMouseDown = () => {
     setOldSlidePosition(getSlidePosition(slideRef.current));
@@ -73,7 +73,7 @@ const Slide = ({
     console.log("slide dropped");
 
     moveArrayElement(tempFileArray, oldSlidePosition, newSlidePosition);
-    updateFiles(tempFileArray);
+    updateFiles([...tempFileArray]);
     setSlideDrag(false);
     slideMouseDrop(event);
 
@@ -89,16 +89,19 @@ const Slide = ({
     const slidePosition = getSlidePosition(slideRef.current);
 
     if (droppedFiles.length <= 1) return;
-    setImageName(droppedFiles[slidePosition + 1].name);
-    setImageUrl(droppedFiles[slidePosition + 1].url);
+    // setImageName(droppedFiles[slidePosition + 1].name);
+    // setImageUrl(droppedFiles[slidePosition + 1].url);
   };
 
   const onAnimationEnd = (event) => {
+    event.target.style.display = "none";
     deleteSlide(
       droppedFiles.filter((slide, index) => {
         return index !== getSlidePosition(event.target);
       })
     );
+
+    event.target.style.display = "block";
 
     event.target.classList.remove("animate__fadeOutDown");
   };
@@ -114,15 +117,15 @@ const Slide = ({
     setImageUrl(currentFile.url);
   };
 
-  return !imageName ? (
-    <h5>Loading...</h5>
+  return !imageFile.name ? (
+    <h5>Loading...{imageFile.name}</h5>
   ) : (
     <SlideItem
       draggable
       onMouseDown={onMouseDown}
       onDrag={onMouseDrag}
       onDragEnd={onMouseDrop}
-      className={`slide ba bg-washed-blue animate__animated`}
+      className={`slide ba bg-washed-blue animate__animated animate__fast`}
       data-index={index}
       ref={slideRef}
       onAnimationEnd={onAnimationEnd}
@@ -143,11 +146,7 @@ const Slide = ({
         ref={deleteButtonRef}
         onClick={onDelete}
       />
-      <img
-        src={!isSlideDeleted ? imageUrl : imageFile.url}
-        draggable="false"
-        alt=""
-      />
+      <img src={imageFile.url} draggable="false" alt="" />
       <input type="file" name="slideFile" className="slide_input" />
       <h4
         style={{
