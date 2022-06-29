@@ -11,6 +11,7 @@ import {
   setSlideDrag,
   processDrop,
   updateSlideFiles,
+  setSelectedSlide,
   deleteSlide,
 } from "../Redux/actions";
 
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
     isDragging: state.isDragging,
     isSlideDragging: state.isSlideDragging,
     droppedFiles: state.droppedFiles,
+    selectedSlide: state.selectedSlide,
   };
 };
 
@@ -28,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetSlideDrag: (value) => dispatch(setSlideDrag(value)),
     onProcessDrop: (event) => processDrop(event, dispatch),
     onUpdateFiles: (value) => dispatch(updateSlideFiles(value)),
+    onSlideSelection: (value) => dispatch(setSelectedSlide(value)),
     onDeleteSlide: (value) => dispatch(deleteSlide(value)),
   };
 };
@@ -38,6 +41,7 @@ function App({
   onProcessDrop,
   onUpdateFiles,
   droppedFiles,
+  selectedSlide,
   isDragging,
   isSlideDragging,
   onDeleteSlide,
@@ -50,7 +54,10 @@ function App({
         isDragging={isDragging}
         isSlideDragging={isSlideDragging}
       >
-        <SlideViewer />
+        <SlideViewer
+          droppedFiles={droppedFiles}
+          selectedSlide={selectedSlide}
+        />
         <SlideContainer
           droppedFiles={droppedFiles}
           isDragging={isDragging}

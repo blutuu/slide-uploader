@@ -9,9 +9,38 @@
     width: 145px;
     height: 82px;
 
+    &:before {
+      content: "";
+      position: absolute;
+      border: solid 3px transparent;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      transition: 0.3s;
+    }
+
+    &.selected {
+      &:before {
+        content: "";
+        border: solid 3px;
+        top: -6px;
+        bottom: -6px;
+        left: -6px;
+        right: -6px;
+        transition: 0.3s;
+      }
+    }
+
     &.drag-active {
       background: transparent;
       border: 1px solid;
+
+      &:before {
+        content: "";
+        border: solid 3px transparent;
+        transition: 0s;
+      }
 
       * {
         display: none;

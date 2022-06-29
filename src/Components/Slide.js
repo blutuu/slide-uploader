@@ -3,16 +3,20 @@ import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import "animate.css";
 import { Icon } from "@iconify/react";
-import { slideMouseDrag, slideMouseDrop } from "../Utility/handlers";
+import {
+  handleOuterClicks,
+  slideMouseDrag,
+  slideMouseDrop,
+} from "../Utility/handlers";
 import {
   getSlidePosition,
   hideElement,
   moveArrayElement,
-  removeDeleteAnimation,
   removeDragActive,
+  removeSelection,
   setDeleteAnimation,
   setDragActive,
-  showElement,
+  setSelection,
 } from "../Utility/helpers";
 
 const SlideItem = styled.div`
@@ -32,18 +36,30 @@ const Slide = ({
   setSlideDrag,
   isSlideDragging,
   droppedFiles,
+  selectSlide,
   updateFiles,
   deleteSlide,
 }) => {
   const [oldSlidePosition, setOldSlidePosition] = useState(0);
   const [newSlidePosition, setNewSlidePosition] = useState(0);
   const [tempFileArray, setTempFileArray] = useState([]);
+  const [isSelected, setIsSelected] = useState(false);
   const slideRef = useRef(null);
   const deleteButtonRef = useRef(null);
+  const slides = document.getElementsByClassName("slide");
+
+  useEffect(() => {}, []);
 
   const onMouseDown = () => {
     setOldSlidePosition(getSlidePosition(slideRef.current));
     setTempFileArray([...droppedFiles]);
+    setIsSelected(true);
+    toggleSelection();
+    selectSlide(imageFile);
+  };
+
+  const onMouseUp = () => {
+    // setIsSelected(false);
   };
 
   const onMouseDrag = (event) => {
@@ -66,6 +82,10 @@ const Slide = ({
 
   const onDelete = () => {
     setDeleteAnimation(slideRef.current);
+
+    if (!isSelected) return;
+    selectSlide({});
+    setIsSelected(false);
   };
 
   const onAnimationEnd = (event) => {
@@ -78,15 +98,21 @@ const Slide = ({
     );
   };
 
+  const toggleSelection = () => {
+    removeSelection(slides);
+    setSelection(slideRef.current);
+  };
+
   return !imageFile.name ? (
     <h5>Loading...{imageFile.name}</h5>
   ) : (
     <SlideItem
       draggable
       onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
       onDrag={onMouseDrag}
       onDragEnd={onMouseDrop}
-      className={`slide ba bg-washed-blue animate__animated animate__fast`}
+      className={`slide bg-washed-blue animate__animated animate__fast`}
       ref={slideRef}
       onAnimationEnd={onAnimationEnd}
     >
@@ -96,7 +122,6 @@ const Slide = ({
         height="1.5rem"
         className="upload-icon"
         ref={deleteButtonRef}
-        onClick={onDelete}
       />
       <Icon
         icon="ri:close-circle-fill"
@@ -106,7 +131,7 @@ const Slide = ({
         ref={deleteButtonRef}
         onClick={onDelete}
       />
-      <img src={imageFile.url} draggable="false" alt="" />
+      <img src={imageFile.url} draggable="false" alt={imageFile.name} />
       <input type="file" name="slideFile" className="slide_input" />
     </SlideItem>
   );

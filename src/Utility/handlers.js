@@ -1,7 +1,7 @@
 import { extractFileData } from "./helpers";
 
 //
-// ─────────────────────────────────────────────────────── FILE DROP HANDLERS ─────
+// ───────────────────────────────────────────── FILE DROP HANDLERS ─────
 //
 
 export const dragOverHandler = (event) => {
@@ -48,7 +48,7 @@ export const fileHandler = async (files) => {
 };
 
 //
-// ────────────────────────────────────────────────────── SLIDE DRAG HANDLERS ─────
+// ──────────────────────────────────────────── SLIDE DRAG HANDLERS ─────
 //
 
 let swap_element = "";
@@ -80,4 +80,22 @@ export const slideMouseDrag = (event) => {
 export const slideMouseDrop = (event) => {
   event.stopPropagation();
   event.preventDefault();
+};
+
+//
+// ───────────────────────────────────────────────── MISC HANDLERS ─────
+//
+
+export const handleOuterClicks = (ref, func) => {
+  const hoc = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      func();
+    }
+  };
+
+  document.addEventListener("mousedown", hoc);
+
+  return () => {
+    document.removeEventListener("mousedown", hoc);
+  };
 };

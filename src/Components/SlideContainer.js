@@ -1,9 +1,27 @@
 import React from "react";
+import { connect } from "react-redux";
 import { useState, useEffect } from "react";
 import Slide from "./Slide";
+import { setSelectedSlide } from "../Redux/actions";
+
+const mapStateToProps = (state) => {
+  return {
+    isDragging: state.isDragging,
+    isSlideDragging: state.isSlideDragging,
+    droppedFiles: state.droppedFiles,
+    selectedSlide: state.selectedSlide,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSlideSelection: (value) => dispatch(setSelectedSlide(value)),
+  };
+};
 
 const SlideContainer = ({
   droppedFiles,
+  onSlideSelection,
   setSlideDrag,
   isSlideDragging,
   onUpdateFiles,
@@ -15,12 +33,12 @@ const SlideContainer = ({
 
   const slides = droppedFiles.map((image, key) => (
     <Slide
-      imageFile={image}
       key={image.name}
-      index={key}
+      imageFile={image}
       setSlideDrag={setSlideDrag}
       droppedFiles={droppedFiles}
       isSlideDragging={isSlideDragging}
+      selectSlide={onSlideSelection}
       updateFiles={onUpdateFiles}
       deleteSlide={onDeleteSlide}
     ></Slide>
@@ -29,9 +47,8 @@ const SlideContainer = ({
   return (
     <div className="w-75 center mb4" id="slide-container">
       {!droppedFiles ? <h2>No files available</h2> : slides}
-      {console.log(`container rendered `)}
     </div>
   );
 };
 
-export default SlideContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(SlideContainer);

@@ -51,3 +51,13 @@ export const hideElement = (element) => {
 export const showElement = (element) => {
   element.style.display = "block";
 };
+
+export const setSelection = (slide_element) => {
+  slide_element.classList.add("selected");
+};
+
+export const removeSelection = (elements) => {
+  Array.from(elements).forEach((element) => {
+    element.classList.remove("selected");
+  });
+};
