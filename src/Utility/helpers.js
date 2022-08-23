@@ -61,3 +61,9 @@ export const removeSelection = (elements) => {
     element.classList.remove("selected");
   });
 };
+
+export const isDeleteClick = (element) => {
+  if (element.classList.contains("delete-icon")) return true;
+
+  return false;
+};

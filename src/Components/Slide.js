@@ -4,19 +4,21 @@ import styled from "styled-components";
 import "animate.css";
 import { Icon } from "@iconify/react";
 import {
-  handleOuterClicks,
+  initializeEvent,
+  onClickDelete,
   slideMouseDrag,
   slideMouseDrop,
 } from "../Utility/handlers";
 import {
   getSlidePosition,
-  hideElement,
   moveArrayElement,
   removeDragActive,
   removeSelection,
   setDeleteAnimation,
   setDragActive,
   setSelection,
+  isDeleteClick,
+  removeDeleteAnimation,
 } from "../Utility/helpers";
 
 const SlideItem = styled.div`
@@ -44,22 +46,31 @@ const Slide = ({
   const [newSlidePosition, setNewSlidePosition] = useState(0);
   const [tempFileArray, setTempFileArray] = useState([]);
   const [isSelected, setIsSelected] = useState(false);
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const slideRef = useRef(null);
   const deleteButtonRef = useRef(null);
-  const slides = document.getElementsByClassName("slide");
+  const slides = document.querySelectorAll(".slide");
 
   useEffect(() => {}, []);
 
-  const onMouseDown = () => {
+  const onMouseDown = (event) => {
     setOldSlidePosition(getSlidePosition(slideRef.current));
     setTempFileArray([...droppedFiles]);
     setIsSelected(true);
-    toggleSelection();
-    selectSlide(imageFile);
   };
 
   const onMouseUp = () => {
-    // setIsSelected(false);
+    if (!isSelected) return;
+    if (isDeleteClicked) return;
+
+    selectSlide(imageFile);
+    toggleSelection();
+    console.log("selected");
+  };
+
+  const onDragStart = () => {
+    setDragActive(slideRef.current.querySelector(".delete-icon"));
+    setIsSelected(false);
   };
 
   const onMouseDrag = (event) => {
@@ -78,19 +89,23 @@ const Slide = ({
     setSlideDrag(false);
     slideMouseDrop(event);
     removeDragActive(slideRef.current);
+    removeDragActive(slideRef.current.querySelector(".delete-icon"));
   };
 
-  const onDelete = () => {
+  const onDelete = (event) => {
+    initializeEvent(event);
     setDeleteAnimation(slideRef.current);
+    setIsSelected(false);
+    setIsDeleteClicked(false);
 
     if (!isSelected) return;
-    selectSlide({});
+    // selectSlide({});
     setIsSelected(false);
   };
 
   const onAnimationEnd = (event) => {
-    hideElement(event.target);
-
+    removeDeleteAnimation(slideRef.current);
+    // hideElement(event.target);
     deleteSlide(
       droppedFiles.filter((slide, index) => {
         return index !== getSlidePosition(event.target);
@@ -103,6 +118,10 @@ const Slide = ({
     setSelection(slideRef.current);
   };
 
+  const deleteButtonClicked = () => {
+    setIsDeleteClicked(true);
+  };
+
   return !imageFile.name ? (
     <h5>Loading...{imageFile.name}</h5>
   ) : (
@@ -110,6 +129,7 @@ const Slide = ({
       draggable
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
+      onDragStart={onDragStart}
       onDrag={onMouseDrag}
       onDragEnd={onMouseDrop}
       className={`slide bg-washed-blue animate__animated animate__fast`}
@@ -121,7 +141,6 @@ const Slide = ({
         width="1.5rem"
         height="1.5rem"
         className="upload-icon"
-        ref={deleteButtonRef}
       />
       <Icon
         icon="ri:close-circle-fill"
@@ -130,6 +149,7 @@ const Slide = ({
         className="delete-icon"
         ref={deleteButtonRef}
         onClick={onDelete}
+        onMouseDown={deleteButtonClicked}
       />
       <img src={imageFile.url} draggable="false" alt={imageFile.name} />
       <input type="file" name="slideFile" className="slide_input" />

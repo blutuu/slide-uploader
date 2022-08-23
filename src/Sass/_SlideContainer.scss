@@ -30,6 +30,11 @@
         right: -6px;
         transition: 0.3s;
       }
+
+      .delete-icon {
+        top: -17%;
+        right: -9%;
+      }
     }
 
     &.drag-active {
@@ -59,12 +64,6 @@
       }
     }
 
-    &:active {
-      .delete-icon {
-        display: none;
-      }
-    }
-
     .upload-icon {
       position: absolute;
       top: 50%;
@@ -90,6 +89,10 @@
       }
       &:active {
         display: block;
+      }
+
+      &.drag-active {
+        display: none;
       }
     }
 

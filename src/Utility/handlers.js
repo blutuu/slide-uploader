@@ -5,8 +5,7 @@ import { extractFileData } from "./helpers";
 //
 
 export const dragOverHandler = (event) => {
-  event.stopPropagation();
-  event.preventDefault();
+  initializeEvent(event);
 };
 
 export const dragEnterHandler = (event) => {
@@ -18,8 +17,7 @@ export const dragExitHandler = (event) => {
 };
 
 export const dropHandler = async (event) => {
-  event.stopPropagation();
-  event.preventDefault();
+  initializeEvent(event);
 
   const files = event.dataTransfer.items;
   event.dataTransfer.clearData();
@@ -48,7 +46,7 @@ export const fileHandler = async (files) => {
 };
 
 //
-// ──────────────────────────────────────────── SLIDE DRAG HANDLERS ─────
+// ──────────────────────────────────────────── SLIDE HANDLERS ─────
 //
 
 let swap_element = "";
@@ -78,13 +76,21 @@ export const slideMouseDrag = (event) => {
 };
 
 export const slideMouseDrop = (event) => {
-  event.stopPropagation();
-  event.preventDefault();
+  initializeEvent(event);
+};
+
+export const onClickDelete = (event) => {
+  initializeEvent(event);
 };
 
 //
 // ───────────────────────────────────────────────── MISC HANDLERS ─────
 //
+
+export const initializeEvent = (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+};
 
 export const handleOuterClicks = (ref, func) => {
   const hoc = (event) => {
