@@ -30,8 +30,8 @@ export const fileHandler = async (files) => {
   let promisesToAwait = [];
 
   if (files) {
-    for (var i = 0; i < files.length; i++) {
-      promisesToAwait.push(extractFileData(files[i]));
+    for (const file of files) {
+      promisesToAwait.push(extractFileData(file));
     }
   }
 
@@ -40,7 +40,7 @@ export const fileHandler = async (files) => {
   });
 
   console.log("\n");
-  console.log(extractedData);
+  console.log(`ExtractedData: ${extractedData}`);
 
   return extractedData;
 };

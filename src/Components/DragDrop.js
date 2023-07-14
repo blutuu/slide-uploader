@@ -49,11 +49,19 @@ const DragDrop = ({
         return React.cloneElement(child, null);
       })}
 
-      <div className="tc f5 mt4 mb5" id="drag-drop-message">
-        <strong>Click a slide to upload</strong>
-        <span>or</span>
-        <span>drag files onto screen</span>
-      </div>
+      <form
+        action=""
+        className="slide-upload-form"
+        encType="multipart/form-data"
+      >
+        <div className="tc f5 mt4 mb5" id="drag-drop-message">
+          <strong>Click a slide to upload</strong>
+          <span>or</span>
+          <span>drag files onto screen</span>
+        </div>
+        <input type="file" name="slideFile" id="slide-input" />
+        <label className="button" htmlFor="slide-input"></label>
+      </form>
     </div>
   );
 };

@@ -34,12 +34,13 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
       return Object.assign({}, state, {
         isDragging: false,
         droppedFiles: [...state.droppedFiles, ...action.payload],
+        error: "",
       });
 
     case PROCESS_FILE_DROP_FAILED:
       return Object.assign({}, state, {
         isDragging: false,
-        error: action.payload,
+        error: action.payload.message,
       });
 
     case UPDATE_SLIDE_FILES:

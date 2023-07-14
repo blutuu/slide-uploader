@@ -33,7 +33,7 @@ const SlideContainer = ({
 
   const slides = droppedFiles.map((image, key) => (
     <Slide
-      key={image.name}
+      key={image.name + key}
       imageFile={image}
       setSlideDrag={setSlideDrag}
       droppedFiles={droppedFiles}

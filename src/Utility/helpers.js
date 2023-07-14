@@ -3,11 +3,10 @@ export const extractFileData = (file) => {
 
   let rawFile = file.getAsFile();
 
-  if (rawFile.type.startsWith("image/")) {
-  }
   let promise = new Promise((resolve, reject) => {
     let reader = new FileReader();
 
+    if (!rawFile.type.startsWith("image/")) reject(new Error("Not an image"));
     reader.readAsDataURL(rawFile);
     reader.onload = () => {
       resolve({ name: rawFile.name, url: reader.result });

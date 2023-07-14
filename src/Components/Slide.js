@@ -25,6 +25,7 @@ const SlideItem = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  box-shadow: 3px 3px 5px 0px #00000059;
   user-select: none;
 
   > img {
@@ -152,7 +153,6 @@ const Slide = ({
         onMouseDown={deleteButtonClicked}
       />
       <img src={imageFile.url} draggable="false" alt={imageFile.name} />
-      <input type="file" name="slideFile" className="slide_input" />
     </SlideItem>
   );
 };
