@@ -16,6 +16,20 @@ export const extractFileData = (file) => {
   return promise;
 };
 
+export const uploadFiles = (files) => {
+  let url = "";
+  let formData = new FormData();
+
+  for (const file in files) {
+    formData.append("file", file);
+  }
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  });
+};
+
 export const getSlidePosition = (slide_element) => {
   return Array.from(slide_element.parentNode.children).indexOf(slide_element);
 };

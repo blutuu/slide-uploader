@@ -50,7 +50,7 @@ const DragDrop = ({
       })}
 
       <form
-        action=""
+        action="/"
         className="slide-upload-form"
         encType="multipart/form-data"
       >
@@ -59,8 +59,9 @@ const DragDrop = ({
           <span>or</span>
           <span>drag files onto screen</span>
         </div>
-        <input type="file" name="slideFile" id="slide-input" />
         <label className="button" htmlFor="slide-input"></label>
+        <input type="file" name="slideFile" id="slide-input" />
+        <button>Upload</button>
       </form>
     </div>
   );
