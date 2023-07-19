@@ -21,13 +21,18 @@ export const uploadFiles = (files) => {
   let formData = new FormData();
 
   for (const file in files) {
-    formData.append("file", file);
+    formData.append("file", file.url, file.name);
+    console.log(file);
   }
 
-  fetch(url, {
-    method: "POST",
-    body: formData,
-  });
+  for (const pair of formData.entries()) {
+    console.log(pair);
+  }
+
+  // fetch(url, {
+  //   method: "POST",
+  //   body: formData,
+  // });
 };
 
 export const getSlidePosition = (slide_element) => {
