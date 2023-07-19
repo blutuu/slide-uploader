@@ -39,9 +39,6 @@ export const fileHandler = async (files) => {
     extractedData.push(...data);
   });
 
-  console.log("\n");
-  console.log(`ExtractedData: ${extractedData}`);
-
   return extractedData;
 };
 

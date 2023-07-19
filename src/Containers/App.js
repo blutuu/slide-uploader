@@ -53,6 +53,7 @@ function App({
         processDrop={onProcessDrop}
         isDragging={isDragging}
         isSlideDragging={isSlideDragging}
+        droppedFiles={droppedFiles}
       >
         <SlideViewer
           droppedFiles={droppedFiles}

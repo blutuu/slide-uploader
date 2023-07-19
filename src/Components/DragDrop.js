@@ -4,6 +4,7 @@ import {
   dragExitHandler,
   dragOverHandler,
 } from "../Utility/handlers";
+import { uploadFiles } from "../Utility/helpers";
 
 const DragDrop = ({
   children,
@@ -11,6 +12,7 @@ const DragDrop = ({
   processDrop,
   isDragging,
   isSlideDragging,
+  droppedFiles,
 }) => {
   const onDragEnter = (event) => {
     if (isSlideDragging) return;
@@ -61,8 +63,14 @@ const DragDrop = ({
         </div>
         <label className="button" htmlFor="slide-input"></label>
         <input type="file" name="slideFile" id="slide-input" />
-        <button>Upload</button>
       </form>
+      <button
+        onClick={() => {
+          uploadFiles(droppedFiles);
+        }}
+      >
+        Upload
+      </button>
     </div>
   );
 };

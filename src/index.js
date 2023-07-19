@@ -12,8 +12,8 @@ import { keyboard } from "@testing-library/user-event/dist/keyboard";
 const logger = createLogger();
 const rootReducer = slideReducer;
 const store = createStore(
-  rootReducer
-  // applyMiddleware(logger),
+  rootReducer,
+  applyMiddleware(logger)
   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
