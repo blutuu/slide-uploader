@@ -17,7 +17,7 @@ export const extractFileData = (file) => {
 };
 
 export const uploadFiles = (files) => {
-  let url = "";
+  let url = "http://localhost:8000/api/upload";
   let formData = new FormData();
 
   for (const file of files) {
@@ -32,7 +32,12 @@ export const uploadFiles = (files) => {
 
   fetch(url, {
     method: "POST",
+    headers: {
+      accepts: "application/json",
+    },
     body: formData,
+  }).then((response) => {
+    console.log(response);
   });
 };
 
