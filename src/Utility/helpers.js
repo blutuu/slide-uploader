@@ -33,7 +33,7 @@ export const uploadFiles = (files) => {
   fetch(url, {
     method: "POST",
     headers: {
-      accepts: "application/json",
+      "Content-Type": "multipart/form-data",
     },
     body: formData,
   }).then((response) => {

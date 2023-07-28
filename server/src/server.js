@@ -2,8 +2,10 @@
 import express from "express";
 import path from "path";
 import cors from "cors";
+import multer from "multer";
 
 const app = express();
+const upload = multer({ dest: "uploads/" });
 const port = process.env.PORT || 8000;
 
 app.use(express.static(path.join(__dirname, "../build")));
@@ -18,7 +20,7 @@ app.get("/api", (req, res) => {
   res.send("Hello from the API");
 });
 
-app.post("/api/upload", (req, res) => {
+app.post("/api/upload", upload.array("image_file"), (req, res) => {
   console.log(req.body);
   res.send("File uploaded");
 });
