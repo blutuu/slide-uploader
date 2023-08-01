@@ -21,8 +21,10 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/api/upload", upload.array("image_file"), (req, res) => {
-  console.log(req.body);
-  res.send("File uploaded");
+  // Take files from the 'uploads' directory and run it through the 'blobToImage' function.
+
+  console.log(req.files[0]);
+  res.json({ requestBody: req.body });
 });
 
 app.listen(port, () => console.log("Listening on port 8000"));

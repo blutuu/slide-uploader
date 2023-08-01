@@ -32,13 +32,17 @@ export const uploadFiles = (files) => {
 
   fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
     body: formData,
-  }).then((response) => {
-    console.log(response);
-  });
+  })
+    .then((response) => {
+      response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const getSlidePosition = (slide_element) => {
