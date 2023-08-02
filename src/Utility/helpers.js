@@ -37,13 +37,12 @@ export const uploadFiles = (files) => {
     .then((response) => {
       response.json();
     })
-    .then((data) => {
-      console.log(data);
-    })
     .catch((error) => {
       console.log(error);
     });
 };
+
+// A function that
 
 export const getSlidePosition = (slide_element) => {
   return Array.from(slide_element.parentNode.children).indexOf(slide_element);
