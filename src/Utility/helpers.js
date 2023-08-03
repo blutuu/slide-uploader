@@ -35,14 +35,34 @@ export const uploadFiles = (files) => {
     body: formData,
   })
     .then((response) => {
-      response.json();
+      response.json().then((data) => {
+        console.log(data);
+      });
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
-// A function that
+// A function that receives files from a server endpoint
+export const getFiles = () => {
+  let url = "http://localhost:8000/api/files";
+
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        return response.text().then((text) => {
+          throw new Error(text);
+        });
+      }
+      response.json().then((data) => {
+        console.log(data);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 export const getSlidePosition = (slide_element) => {
   return Array.from(slide_element.parentNode.children).indexOf(slide_element);

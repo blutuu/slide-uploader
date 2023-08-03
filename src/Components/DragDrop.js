@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   dragEnterHandler,
   dragExitHandler,
   dragOverHandler,
 } from "../Utility/handlers";
-import { uploadFiles } from "../Utility/helpers";
+import { getFiles, uploadFiles } from "../Utility/helpers";
 
 const DragDrop = ({
   children,
@@ -14,6 +14,10 @@ const DragDrop = ({
   isSlideDragging,
   droppedFiles,
 }) => {
+  useEffect(() => {
+    getFiles();
+  }, []);
+
   const onDragEnter = (event) => {
     if (isSlideDragging) return;
 

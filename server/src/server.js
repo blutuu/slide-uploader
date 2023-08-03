@@ -3,6 +3,7 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import multer from "multer";
+import fs from "fs";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -29,23 +30,23 @@ app.use(cors());
 //////////////////////////////
 
 app.get("/api", (req, res) => {
-  res.send("Hello from the API");
+  res.status(200).send("Hello from the API");
 });
 
 app.post("/api/upload", upload.array("image_file"), (req, res) => {
   console.log(req.files[0]);
-  res.json({ requestBody: req.body });
+  res.status(200).json({ requestBody: req.body });
 });
 
 // An endpoint that sends all files from the uploads folder
 app.get("/api/files", (req, res) => {
   const directoryPath = path.join(__dirname, "../uploads");
-  fs.readdir(directoryPath, (err, files) => {
+  fs.readFile(directoryPath, (err, files) => {
     if (err) {
-      return console.log("Unable to scan directory: " + err);
+      return res.status(500).send("Unable to scan directory: " + err);
     }
 
-    res.json(files);
+    return res.status(200).json(files);
   });
 });
 
