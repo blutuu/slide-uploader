@@ -4,7 +4,7 @@ import {
   dragExitHandler,
   dragOverHandler,
 } from "../Utility/handlers";
-import { getFiles, uploadFiles } from "../Utility/helpers";
+import { getImages, uploadFiles } from "../Utility/helpers";
 
 const DragDrop = ({
   children,
@@ -15,7 +15,7 @@ const DragDrop = ({
   droppedFiles,
 }) => {
   useEffect(() => {
-    getFiles();
+    getImages();
   }, []);
 
   const onDragEnter = (event) => {

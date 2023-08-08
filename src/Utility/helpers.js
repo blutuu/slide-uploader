@@ -45,8 +45,8 @@ export const uploadFiles = (files) => {
 };
 
 // A function that receives files from a server endpoint
-export const getFiles = () => {
-  let url = "http://localhost:8000/api/files";
+export const getImages = () => {
+  let url = "http://localhost:8000/api/images";
 
   fetch(url)
     .then((response) => {

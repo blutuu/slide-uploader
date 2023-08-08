@@ -1,0 +1,42 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build",
+			"detail": "react-scripts build"
+		},
+		{
+			"label": "su",
+			"dependsOn": [
+				"start uploader",
+				"start server"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "start uploader",
+			"type": "npm",
+			"script": "start",
+			"path": "src/",
+			"problemMatcher": [],
+			"detail": "react-scripts start",
+			"group": "build"
+		},
+		{
+			"label": "start server",
+			"type": "npm",
+			"script": "start",
+			"path": "server/",
+			"problemMatcher": [],
+			"detail": "npx nodemon --exec babel-node src/server.js",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

@@ -24,6 +24,7 @@ const upload = multer({ storage: storage });
 app.use(express.static(path.join(__dirname, "../build")));
 app.use(express.json());
 app.use(cors());
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 //////////////////////////////
 //  *  Endpoints            //
@@ -39,14 +40,28 @@ app.post("/api/upload", upload.array("image_file"), (req, res) => {
 });
 
 // An endpoint that sends all files from the uploads folder
-app.get("/api/files", (req, res) => {
+app.get("/api/images", (req, res) => {
+  const data = [];
   const directoryPath = path.join(__dirname, "../uploads");
-  fs.readFile(directoryPath, (err, files) => {
+
+  // Read all files from the uploads folder
+
+  fs.readdir(directoryPath, (err, files) => {
     if (err) {
       return res.status(500).send("Unable to scan directory: " + err);
     }
 
-    return res.status(200).json(files);
+    // Read each file and get its contents
+
+    files.forEach((file) => {
+      const filePath = path.join(directoryPath, file);
+      // data[file] = fs.readFileSync(filePath, "base64");
+      data.push({
+        name: file,
+        url: `http://localhost:8000/uploads/${file}`,
+      });
+    });
+    res.status(200).json(data);
   });
 });
 
