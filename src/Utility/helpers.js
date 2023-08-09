@@ -45,10 +45,11 @@ export const uploadFiles = (files) => {
 };
 
 // A function that receives files from a server endpoint
-export const getImages = () => {
+export const getImages = async () => {
   let url = "http://localhost:8000/api/images";
+  let images = [];
 
-  fetch(url)
+  await fetch(url)
     .then((response) => {
       if (!response.ok) {
         return response.text().then((text) => {
@@ -56,7 +57,9 @@ export const getImages = () => {
         });
       }
       response.json().then((data) => {
-        console.log(data);
+        // console.log(data);
+        images = data;
+        return images;
       });
     })
     .catch((error) => {

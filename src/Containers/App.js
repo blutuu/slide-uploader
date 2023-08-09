@@ -54,6 +54,7 @@ function App({
         isDragging={isDragging}
         isSlideDragging={isSlideDragging}
         droppedFiles={droppedFiles}
+        onUpdateFiles={onUpdateFiles}
       >
         <SlideViewer
           droppedFiles={droppedFiles}

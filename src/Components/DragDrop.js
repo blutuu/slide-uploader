@@ -13,9 +13,10 @@ const DragDrop = ({
   isDragging,
   isSlideDragging,
   droppedFiles,
+  onUpdateFiles,
 }) => {
   useEffect(() => {
-    getImages();
+    console.log(getImages());
   }, []);
 
   const onDragEnter = (event) => {

@@ -85,6 +85,8 @@ const Slide = ({
   };
 
   const onMouseDrop = (event) => {
+    console.log(tempFileArray);
+
     moveArrayElement(tempFileArray, oldSlidePosition, newSlidePosition);
     updateFiles(tempFileArray);
     setSlideDrag(false);
