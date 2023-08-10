@@ -39,7 +39,6 @@ export const uploadFiles = (files) => {
       response.text().then((text) => {
         try {
           const data = JSON.parse(text);
-          console.log(data);
         } catch {
           console.log(text);
         }
@@ -65,7 +64,6 @@ export const getImages = async () => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       images = data;
     })
     .catch((error) => {

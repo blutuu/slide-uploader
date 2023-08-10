@@ -4,9 +4,15 @@ import path from "path";
 import cors from "cors";
 import multer from "multer";
 import fs from "fs";
+import winston from "winston";
 
 const app = express();
 const port = process.env.PORT || 8000;
+const logger = winston.createLogger({
+  level: "debug",
+  format: winston.format.json(),
+  transports: [new winston.transports.Console()],
+});
 
 // set up multer with a destination and filename
 const storage = multer.diskStorage({
@@ -41,6 +47,7 @@ app.post("/api/upload", upload.array("image_file"), (req, res) => {
 
 // An endpoint that sends all files from the uploads folder
 app.get("/api/images", async (req, res) => {
+  logger.error("Hello from the API");
   const data = [];
   const directoryPath = path.join(__dirname, "../uploads");
 

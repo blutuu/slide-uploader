@@ -17,7 +17,6 @@ const DragDrop = ({
 }) => {
   useEffect(() => {
     getImages().then((files) => {
-      console.log(files);
       onUpdateFiles(files);
     });
   }, []);
