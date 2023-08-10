@@ -16,7 +16,10 @@ const DragDrop = ({
   onUpdateFiles,
 }) => {
   useEffect(() => {
-    console.log(getImages());
+    getImages().then((files) => {
+      console.log(files);
+      onUpdateFiles(files);
+    });
   }, []);
 
   const onDragEnter = (event) => {

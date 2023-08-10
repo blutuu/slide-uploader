@@ -40,7 +40,7 @@ app.post("/api/upload", upload.array("image_file"), (req, res) => {
 });
 
 // An endpoint that sends all files from the uploads folder
-app.get("/api/images", (req, res) => {
+app.get("/api/images", async (req, res) => {
   const data = [];
   const directoryPath = path.join(__dirname, "../uploads");
 

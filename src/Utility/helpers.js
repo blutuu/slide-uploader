@@ -62,15 +62,17 @@ export const getImages = async () => {
           throw new Error(text);
         });
       }
-      response.json().then((data) => {
-        images = data;
-        console.log(images);
-        return images;
-      });
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      images = data;
     })
     .catch((error) => {
       console.log(error);
     });
+
+  return images;
 };
 
 export const getSlidePosition = (slide_element) => {
