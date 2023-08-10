@@ -35,8 +35,14 @@ export const uploadFiles = (files) => {
     body: formData,
   })
     .then((response) => {
-      response.json().then((data) => {
-        console.log(data);
+      // Checking whether the response is text or JSON
+      response.text().then((text) => {
+        try {
+          const data = JSON.parse(text);
+          console.log(data);
+        } catch {
+          console.log(text);
+        }
       });
     })
     .catch((error) => {
@@ -57,8 +63,8 @@ export const getImages = async () => {
         });
       }
       response.json().then((data) => {
-        // console.log(data);
         images = data;
+        console.log(images);
         return images;
       });
     })

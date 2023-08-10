@@ -36,7 +36,7 @@ app.get("/api", (req, res) => {
 
 app.post("/api/upload", upload.array("image_file"), (req, res) => {
   console.log(req.files[0]);
-  res.status(200).json({ requestBody: req.body });
+  res.status(200).send("Files uploaded successfully");
 });
 
 // An endpoint that sends all files from the uploads folder
@@ -48,6 +48,7 @@ app.get("/api/images", (req, res) => {
 
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
+      fs.mkdirSync("./uploads");
       return res.status(500).send("Unable to scan directory: " + err);
     }
 
