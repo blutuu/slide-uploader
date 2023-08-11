@@ -72,11 +72,12 @@ const DragDrop = ({
         <input type="file" name="slideFile" id="slide-input" />
       </form>
       <button
+        className="savebutton"
         onClick={() => {
           uploadFiles(droppedFiles);
         }}
       >
-        Upload
+        Save
       </button>
     </div>
   );

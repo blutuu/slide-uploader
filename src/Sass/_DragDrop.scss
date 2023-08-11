@@ -33,4 +33,21 @@
   input, button {
     position: relative;
   }
+
+  .savebutton {
+    width: 140px;
+    height: 60px;
+    background-color: $oe_darkblue;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: .1s;
+    
+    &:hover {
+      cursor: pointer;
+      background-color: lighten($oe_darkblue, 5);
+      transition: .1s;
+    }
+  }
 }

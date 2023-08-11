@@ -4,15 +4,11 @@ import path from "path";
 import cors from "cors";
 import multer from "multer";
 import fs from "fs";
-import winston from "winston";
+import npmlog from "npmlog";
 
 const app = express();
 const port = process.env.PORT || 8000;
-const logger = winston.createLogger({
-  level: "debug",
-  format: winston.format.json(),
-  transports: [new winston.transports.Console()],
-});
+const log = npmlog;
 
 // set up multer with a destination and filename
 const storage = multer.diskStorage({
@@ -42,12 +38,12 @@ app.get("/api", (req, res) => {
 
 app.post("/api/upload", upload.array("image_file"), (req, res) => {
   console.log(req.files[0]);
+
   res.status(200).send("Files uploaded successfully");
 });
 
 // An endpoint that sends all files from the uploads folder
 app.get("/api/images", async (req, res) => {
-  logger.error("Hello from the API");
   const data = [];
   const directoryPath = path.join(__dirname, "../uploads");
 
@@ -56,11 +52,11 @@ app.get("/api/images", async (req, res) => {
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
       fs.mkdirSync("./uploads");
+      log.error("Getting images", "Unable to scan directory: " + err);
       return res.status(500).send("Unable to scan directory: " + err);
     }
 
     // Read each file and get its contents
-
     files.forEach((file) => {
       const filePath = path.join(directoryPath, file);
       // data[file] = fs.readFileSync(filePath, "base64");
@@ -69,6 +65,8 @@ app.get("/api/images", async (req, res) => {
         url: `http://localhost:8000/uploads/${file}`,
       });
     });
+
+    log.info("Getting images", "Files successfully retrieved");
     res.status(200).json(data);
   });
 });
