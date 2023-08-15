@@ -39,6 +39,12 @@ export const fileHandler = async (files) => {
     extractedData.push(...data);
   });
 
+  for (const fileObject of extractedData) {
+    fileObject.changesMade = true;
+  }
+
+  console.log(extractedData);
+
   return extractedData;
 };
 

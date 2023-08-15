@@ -35,6 +35,10 @@
         top: -17%;
         right: -9%;
       }
+      .new-icon {
+        top: -15.2%;
+        right: -8.2%;
+      }
     }
 
     &.drag-active {
@@ -61,6 +65,10 @@
       }
       .delete-icon {
         opacity: 1;
+      }
+      .new-icon {
+        opacity: 0;
+        transform: scale(2);
       }
     }
 
@@ -90,6 +98,18 @@
       &:active {
         display: block;
       }
+
+      &.drag-active {
+        display: none;
+      }
+    }
+
+    .new-icon {
+      position: absolute;
+      top: -8%;
+      right: -6%;
+      opacity: 1;
+      transition: .3s;
 
       &.drag-active {
         display: none;

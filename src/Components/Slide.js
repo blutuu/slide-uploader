@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import "animate.css";
 import { Icon } from "@iconify/react";
+import NewIcon from "./NewIcon";
 import {
   initializeEvent,
   onClickDelete,
@@ -71,6 +72,7 @@ const Slide = ({
 
   const onDragStart = () => {
     setDragActive(slideRef.current.querySelector(".delete-icon"));
+    setDragActive(slideRef.current.querySelector(".new-icon"));
     setIsSelected(false);
   };
 
@@ -93,6 +95,7 @@ const Slide = ({
     slideMouseDrop(event);
     removeDragActive(slideRef.current);
     removeDragActive(slideRef.current.querySelector(".delete-icon"));
+    removeDragActive(slideRef.current.querySelector(".new-icon"));
   };
 
   const onDelete = (event) => {
@@ -145,6 +148,7 @@ const Slide = ({
         height="1.5rem"
         className="upload-icon"
       />
+      {imageFile.changesMade ? <NewIcon /> : ""}
       <Icon
         icon="ri:close-circle-fill"
         width="1.5rem"

@@ -63,6 +63,7 @@ app.get("/api/images", async (req, res) => {
       data.push({
         name: file,
         url: `http://localhost:8000/uploads/${file}`,
+        changesMade: false,
       });
     });
 
