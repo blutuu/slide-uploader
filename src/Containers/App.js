@@ -13,6 +13,7 @@ import {
   updateSlideFiles,
   setSelectedSlide,
   deleteSlide,
+  updateSavedFiles,
 } from "../Redux/actions";
 
 const mapStateToProps = (state) => {
@@ -30,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetSlideDrag: (value) => dispatch(setSlideDrag(value)),
     onProcessDrop: (event) => processDrop(event, dispatch),
     onUpdateFiles: (value) => dispatch(updateSlideFiles(value)),
+    onSaveFiles: (value) => dispatch(updateSavedFiles(value)),
     onSlideSelection: (value) => dispatch(setSelectedSlide(value)),
     onDeleteSlide: (value) => dispatch(deleteSlide(value)),
   };
@@ -40,6 +42,7 @@ function App({
   onSetSlideDrag,
   onProcessDrop,
   onUpdateFiles,
+  onSaveFiles,
   droppedFiles,
   selectedSlide,
   isDragging,
@@ -55,6 +58,7 @@ function App({
         isSlideDragging={isSlideDragging}
         droppedFiles={droppedFiles}
         onUpdateFiles={onUpdateFiles}
+        onSaveFiles={onSaveFiles}
       >
         <SlideViewer
           droppedFiles={droppedFiles}

@@ -5,6 +5,7 @@ import {
   PROCESS_FILE_DROP_SUCCESS,
   PROCESS_FILE_DROP_FAILED,
   UPDATE_SLIDE_FILES,
+  UPDATE_SAVED_FILES,
   SET_SELECTED_SLIDE,
   DELETE_SLIDE,
   SET_SLIDE_DELETED,
@@ -37,6 +38,11 @@ export const processDrop = (event, dispatch) =>
 
 export const updateSlideFiles = (value) => ({
   type: UPDATE_SLIDE_FILES,
+  payload: value,
+});
+
+export const updateSavedFiles = (value) => ({
+  type: UPDATE_SAVED_FILES,
   payload: value,
 });
 

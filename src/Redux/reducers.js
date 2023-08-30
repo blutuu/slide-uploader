@@ -4,6 +4,7 @@ import {
   PROCESS_FILE_DROP_SUCCESS,
   PROCESS_FILE_DROP_FAILED,
   UPDATE_SLIDE_FILES,
+  UPDATE_SAVED_FILES,
   SET_SELECTED_SLIDE,
   DELETE_SLIDE,
   SET_SLIDE_DELETED,
@@ -13,6 +14,7 @@ const initialStateDragDrop = {
   isDragging: false,
   isSlideDragging: false,
   droppedFiles: [],
+  savedFiles: [],
   selectedSlide: {},
   isSlideDeleted: false,
   error: "",
@@ -46,6 +48,11 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
     case UPDATE_SLIDE_FILES:
       return Object.assign({}, state, {
         droppedFiles: action.payload,
+      });
+
+    case UPDATE_SAVED_FILES:
+      return Object.assign({}, state, {
+        savedFiles: action.payload,
       });
 
     case SET_SELECTED_SLIDE:

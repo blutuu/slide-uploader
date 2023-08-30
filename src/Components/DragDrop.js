@@ -14,10 +14,12 @@ const DragDrop = ({
   isSlideDragging,
   droppedFiles,
   onUpdateFiles,
+  onSaveFiles,
 }) => {
   useEffect(() => {
     getImages().then((files) => {
       onUpdateFiles(files);
+      onSaveFiles(files);
     });
   }, []);
 

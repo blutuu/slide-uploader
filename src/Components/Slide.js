@@ -18,6 +18,7 @@ import {
   setDeleteAnimation,
   setDragActive,
   setSelection,
+  setChangesMade,
   isDeleteClick,
   removeDeleteAnimation,
 } from "../Utility/helpers";
@@ -80,6 +81,7 @@ const Slide = ({
     slideMouseDrag(event);
     setNewSlidePosition(getSlidePosition(slideRef.current));
     setDragActive(slideRef.current);
+    setChangesMade(imageFile);
 
     if (isSlideDragging) return;
 

@@ -84,10 +84,12 @@ export const moveArrayElement = (array, fromIndex, toIndex) => {
 };
 
 export const setDragActive = (slide_element) => {
+  if (!slide_element) return;
   slide_element.classList.add("drag-active");
 };
 
 export const removeDragActive = (slide_element) => {
+  if (!slide_element) return;
   slide_element.classList.remove("drag-active");
 };
 
@@ -122,6 +124,10 @@ export const isDeleteClick = (element) => {
   if (element.classList.contains("delete-icon")) return true;
 
   return false;
+};
+
+export const setChangesMade = (image_file) => {
+  image_file.changesMade = true;
 };
 
 function dataURItoBlob(dataURI) {

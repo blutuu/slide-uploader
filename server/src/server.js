@@ -39,6 +39,7 @@ app.get("/api", (req, res) => {
 app.post("/api/upload", upload.array("image_file"), (req, res) => {
   console.log(req.files[0]);
 
+  log.info("Uploading images", "Files successfully uploaded");
   res.status(200).send("Files uploaded successfully");
 });
 
@@ -69,6 +70,22 @@ app.get("/api/images", async (req, res) => {
 
     log.info("Getting images", "Files successfully retrieved");
     res.status(200).json(data);
+  });
+});
+
+// An endpoint that deletes a file from the uploads folder
+app.delete("/api/images/:name", (req, res) => {
+  const directoryPath = path.join(__dirname, "../uploads");
+  const filePath = path.join(directoryPath, req.params.name);
+
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      log.error("Deleting image", "Unable to delete file: " + err);
+      return res.status(500).send("Unable to delete file: " + err);
+    }
+
+    log.info("Deleting image", "File successfully deleted");
+    res.status(200).send("File successfully deleted");
   });
 });
 
