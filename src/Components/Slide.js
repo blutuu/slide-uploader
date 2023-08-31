@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import "animate.css";
 import { Icon } from "@iconify/react";
@@ -41,6 +40,7 @@ const Slide = ({
   setSlideDrag,
   isSlideDragging,
   droppedFiles,
+  savedFiles,
   selectSlide,
   updateFiles,
   deleteSlide,

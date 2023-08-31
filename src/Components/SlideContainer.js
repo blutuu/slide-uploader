@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useState, useEffect } from "react";
 import Slide from "./Slide";
 import { setSelectedSlide } from "../Redux/actions";
 
@@ -9,6 +8,7 @@ const mapStateToProps = (state) => {
     isDragging: state.isDragging,
     isSlideDragging: state.isSlideDragging,
     droppedFiles: state.droppedFiles,
+    savedFiles: state.savedFiles,
     selectedSlide: state.selectedSlide,
   };
 };
@@ -21,6 +21,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const SlideContainer = ({
   droppedFiles,
+  savedFiles,
   onSlideSelection,
   setSlideDrag,
   isSlideDragging,
@@ -37,6 +38,7 @@ const SlideContainer = ({
       imageFile={image}
       setSlideDrag={setSlideDrag}
       droppedFiles={droppedFiles}
+      savedFiles={savedFiles}
       isSlideDragging={isSlideDragging}
       selectSlide={onSlideSelection}
       updateFiles={onUpdateFiles}

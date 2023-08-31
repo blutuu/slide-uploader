@@ -57,14 +57,18 @@ app.get("/api/images", async (req, res) => {
       return res.status(500).send("Unable to scan directory: " + err);
     }
 
+    if (files.length == 0) {
+      log.info("Getting images", "Uploads directory empty.");
+      return res.status(200).send("No uploads available.");
+    }
+
     // Read each file and get its contents
-    files.forEach((file) => {
-      const filePath = path.join(directoryPath, file);
-      // data[file] = fs.readFileSync(filePath, "base64");
+    files.forEach((file, index) => {
       data.push({
         name: file,
         url: `http://localhost:8000/uploads/${file}`,
         changesMade: false,
+        position: index,
       });
     });
 
