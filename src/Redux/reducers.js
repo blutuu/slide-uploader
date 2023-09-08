@@ -48,6 +48,9 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
     case SET_SELECTED_SLIDE:
       return { ...state, selectedSlide: action.payload };
 
+    case DELETE_SLIDE:
+      return { ...state, droppedFiles: action.payload };
+
     case SET_SLIDE_DELETED:
       return { ...state, isSlideDeleted: action.payload };
 
