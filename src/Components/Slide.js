@@ -62,7 +62,10 @@ const Slide = ({
       (slide) => slide.name === imageFile.name
     );
 
+    if (tempPosition == imageFile.position) return;
     imageFile.position = tempPosition;
+    setChangesMade(imageFile);
+    console.log(`${imageFile.name} updated`);
   }, []);
 
   const onMouseDown = (event) => {
