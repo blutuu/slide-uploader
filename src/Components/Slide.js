@@ -20,6 +20,7 @@ import {
   setChangesMade,
   isDeleteClick,
   removeDeleteAnimation,
+  updatePositionAttribute,
 } from "../Utility/helpers";
 
 const SlideItem = styled.div`
@@ -43,6 +44,7 @@ const Slide = ({
   savedFiles,
   selectSlide,
   updateFiles,
+  updateSlidePosition,
   deleteSlide,
 }) => {
   const [oldSlidePosition, setOldSlidePosition] = useState(0);
@@ -54,7 +56,14 @@ const Slide = ({
   const deleteButtonRef = useRef(null);
   const slides = document.querySelectorAll(".slide");
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const tempArray = [...droppedFiles];
+    const tempPosition = tempArray.findIndex(
+      (slide) => slide.name === imageFile.name
+    );
+
+    imageFile.position = tempPosition;
+  }, []);
 
   const onMouseDown = (event) => {
     setOldSlidePosition(getSlidePosition(slideRef.current));

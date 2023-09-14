@@ -18,6 +18,8 @@ const storage = multer.diskStorage({
   },
   // The file name with the original extension
   filename: function (req, file, cb) {
+    console.log(file);
+
     cb(null, file.originalname.slice(0, -3) + file.mimetype.slice(6));
   },
 });
@@ -37,7 +39,7 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/api/upload", upload.array("image_file"), (req, res) => {
-  console.log(req.files[0]);
+  // console.log(req.files);
 
   log.info("Uploading images", "Files successfully uploaded");
   res.status(200).send("Files uploaded successfully");

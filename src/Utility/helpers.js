@@ -81,6 +81,11 @@ export const moveArrayElement = (array, fromIndex, toIndex) => {
   const element = array[fromIndex];
   array.splice(fromIndex, 1);
   array.splice(toIndex, 0, element);
+  // updatePositionAttribute(array, toIndex);
+};
+
+export const updatePositionAttribute = (array, physical_position) => {
+  array[physical_position].position = physical_position;
 };
 
 export const setDragActive = (slide_element) => {

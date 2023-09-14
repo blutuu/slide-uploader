@@ -8,6 +8,7 @@ import {
   SET_SELECTED_SLIDE,
   DELETE_SLIDE,
   SET_SLIDE_DELETED,
+  UPDATE_SLIDE_POSITION,
 } from "./constants";
 
 const initialStateDragDrop = {
@@ -40,6 +41,9 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
       return { ...state, isDragging: false, error: action.payload.message };
 
     case UPDATE_SLIDE_FILES:
+      return { ...state, droppedFiles: action.payload };
+
+    case UPDATE_SLIDE_POSITION:
       return { ...state, droppedFiles: action.payload };
 
     case UPDATE_SAVED_FILES:

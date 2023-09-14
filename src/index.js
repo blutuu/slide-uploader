@@ -9,7 +9,7 @@ import { slideReducer } from "./Redux/reducers";
 import reportWebVitals from "./reportWebVitals";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
-const logger = createLogger();
+const logger = createLogger({ collapsed: true });
 const rootReducer = slideReducer;
 const store = createStore(
   rootReducer,

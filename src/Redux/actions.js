@@ -9,6 +9,7 @@ import {
   SET_SELECTED_SLIDE,
   DELETE_SLIDE,
   SET_SLIDE_DELETED,
+  UPDATE_SLIDE_POSITION,
 } from "./constants";
 
 export const setDrag = (value) => ({
@@ -38,6 +39,11 @@ export const processDrop = (event, dispatch) =>
 
 export const updateSlideFiles = (value) => ({
   type: UPDATE_SLIDE_FILES,
+  payload: value,
+});
+
+export const updateSlidePosition = (value) => ({
+  type: UPDATE_SLIDE_POSITION,
   payload: value,
 });
 
