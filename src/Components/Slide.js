@@ -51,6 +51,7 @@ const Slide = ({
   const [newSlidePosition, setNewSlidePosition] = useState(0);
   const [tempFileArray, setTempFileArray] = useState([]);
   const [isSelected, setIsSelected] = useState(false);
+  const [changesMadeState, setChangesMadeState] = useState(false);
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const slideRef = useRef(null);
   const deleteButtonRef = useRef(null);
@@ -63,9 +64,10 @@ const Slide = ({
     );
 
     if (tempPosition == imageFile.position) return;
+
     imageFile.position = tempPosition;
     setChangesMade(imageFile);
-    console.log(`${imageFile.name} updated`);
+    setChangesMadeState(true);
   }, []);
 
   const onMouseDown = (event) => {
@@ -93,7 +95,7 @@ const Slide = ({
     slideMouseDrag(event);
     setNewSlidePosition(getSlidePosition(slideRef.current));
     setDragActive(slideRef.current);
-    setChangesMade(imageFile);
+    // setChangesMade(imageFile);
 
     if (isSlideDragging) return;
 
@@ -162,7 +164,7 @@ const Slide = ({
         height="1.5rem"
         className="upload-icon"
       />
-      {imageFile.changesMade ? <NewIcon /> : ""}
+      {changesMadeState ? <NewIcon /> : ""}
       <Icon
         icon="ri:close-circle-fill"
         width="1.5rem"
