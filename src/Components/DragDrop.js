@@ -76,7 +76,11 @@ const DragDrop = ({
       <button
         className="savebutton"
         onClick={() => {
-          uploadFiles(droppedFiles);
+          uploadFiles(
+            droppedFiles.filter((slide, index) => {
+              return slide.changesMade == true;
+            })
+          );
         }}
       >
         Save
