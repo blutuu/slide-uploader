@@ -18,9 +18,12 @@ const storage = multer.diskStorage({
   },
   // The file name with the original extension
   filename: function (req, file, cb) {
+    const mimetype = file.mimetype;
+    const regex = /\/(.+)/;
+    const extension = mimetype.match(regex)[1];
     console.log(file);
 
-    cb(null, file.originalname.slice(0, -3) + file.mimetype.slice(6));
+    cb(null, file.originalname.slice(0, -3) + extension);
   },
 });
 const upload = multer({ storage: storage });
