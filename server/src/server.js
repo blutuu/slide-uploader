@@ -10,6 +10,21 @@ const app = express();
 const port = process.env.PORT || 8000;
 const log = npmlog;
 
+const fileFilter = (req, file, cb) => {
+  var filetypes = /jpg|jpeg|png|gif/;
+  var mimetype = filetypes.test(file.mimetype);
+  var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  }
+  log.error(
+    "Error",
+    "File upload only supports the following filetypes - " + filetypes
+  );
+  // cb("Error: File upload only supports the following filetypes - " + filetypes);
+};
+
 // set up multer with a destination and filename
 const storage = multer.diskStorage({
   // The file destination
@@ -26,7 +41,10 @@ const storage = multer.diskStorage({
     cb(null, file.originalname.slice(0, -3) + extension);
   },
 });
-const upload = multer({ storage: storage });
+const upload = multer({
+  fileFilter: fileFilter,
+  storage: storage,
+});
 
 app.use(express.static(path.join(__dirname, "../build")));
 app.use(express.json());
