@@ -19,7 +19,7 @@ const fileFilter = (req, file, cb) => {
     return cb(null, true);
   }
   log.error(
-    "Error",
+    "Uploading images",
     "File upload only supports the following filetypes - " + filetypes
   );
   // cb("Error: File upload only supports the following filetypes - " + filetypes);
@@ -36,7 +36,7 @@ const storage = multer.diskStorage({
     const mimetype = file.mimetype;
     const regex = /\/(.+)/;
     const extension = mimetype.match(regex)[1];
-    console.log(file);
+    // console.log(file);
 
     cb(null, file.originalname.slice(0, -3) + extension);
   },
@@ -47,7 +47,7 @@ const upload = multer({
 });
 
 app.use(express.static(path.join(__dirname, "../build")));
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
@@ -61,6 +61,8 @@ app.get("/api", (req, res) => {
 
 app.post("/api/upload", upload.array("image_file"), (req, res) => {
   log.info("Uploading images", "Files successfully uploaded");
+  //console.log(req.files);
+
   res.status(200).send("Files uploaded successfully");
 });
 
@@ -95,6 +97,25 @@ app.get("/api/images", async (req, res) => {
 
     log.info("Getting images", "Files successfully retrieved");
     res.status(200).json(data);
+  });
+});
+
+// Updates the filenames that are in the uploads folder
+app.post("/api/update", (req, res) => {
+  const directoryPath = path.join(__dirname, "../uploads");
+
+  fs.readdir(directoryPath, (err, files) => {
+    if (!req.body || files.length == 0) {
+      log.info("Updating images", "No updates applied");
+      return res.status(200).send("No updates applied");
+    }
+    console.log(files.indexOf("Slide23.png"));
+
+    for (const file of req.body) {
+      console.log(`${file.name} ${file.position}`);
+    }
+
+    res.status(200).send("Files updated successfully");
   });
 });
 

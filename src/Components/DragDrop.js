@@ -4,7 +4,7 @@ import {
   dragExitHandler,
   dragOverHandler,
 } from "../Utility/handlers";
-import { getImages, uploadFiles } from "../Utility/helpers";
+import { getImages, uploadFiles, updateFiles } from "../Utility/helpers";
 
 const DragDrop = ({
   children,
@@ -81,6 +81,7 @@ const DragDrop = ({
               return slide.changesMade == true;
             })
           );
+          updateFiles(droppedFiles);
         }}
       >
         Save

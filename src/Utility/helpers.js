@@ -1,3 +1,5 @@
+import { Buffer } from "buffer";
+
 export const extractFileData = (file) => {
   if (file.kind !== "file") return {};
 
@@ -61,16 +63,49 @@ export const getImages = async () => {
           throw new Error(text);
         });
       }
+
       return response.json();
     })
     .then((data) => {
-      images = data;
+      images = data.map((image, index) => {
+        getDataUrl(image.url).then((data_url) => {
+          image.url = data_url;
+        });
+
+        return image;
+      });
     })
     .catch((error) => {
       console.log(error);
     });
 
   return images;
+};
+
+export const updateFiles = (files) => {
+  let url = "http://localhost:8000/api/update";
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(files),
+  })
+    .then((response) => {
+      // Checking whether the response is text or JSON
+      response.text().then((text) => {
+        try {
+          const data = JSON.parse(text);
+        } catch {
+          console.log(text);
+        }
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const getSlidePosition = (slide_element) => {
@@ -81,7 +116,6 @@ export const moveArrayElement = (array, fromIndex, toIndex) => {
   const element = array[fromIndex];
   array.splice(fromIndex, 1);
   array.splice(toIndex, 0, element);
-  // updatePositionAttribute(array, toIndex);
 };
 
 export const updatePositionAttribute = (array, physical_position) => {
@@ -137,19 +171,44 @@ export const setChangesMade = (image_file) => {
 
 function dataURItoBlob(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string
-  var byteString;
+  let byteString;
   if (dataURI.split(",")[0].indexOf("base64") >= 0)
     byteString = atob(dataURI.split(",")[1]);
   else byteString = unescape(dataURI.split(",")[1]);
 
   // separate out the mime component
-  var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+  let mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
 
   // write the bytes of the string to a typed array
-  var ia = new Uint8Array(byteString.length);
-  for (var i = 0; i < byteString.length; i++) {
+  let ia = new Uint8Array(byteString.length);
+  for (let i = 0; i < byteString.length; i++) {
     ia[i] = byteString.charCodeAt(i);
   }
 
   return new Blob([ia], { type: mimeString });
 }
+
+const getDataUrl = async (url) => {
+  let blob_url;
+
+  await fetch(url)
+    .then((response) => response.blob())
+    .then((blob) => {
+      blob_url = blob;
+    });
+
+  let data_url = base64FromUrl(blob_url);
+
+  return data_url;
+};
+
+const base64FromUrl = (url) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(url);
+    reader.onloadend = () => {
+      const base64data = reader.result;
+      resolve(base64data);
+    };
+  });
+};
