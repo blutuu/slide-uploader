@@ -89,6 +89,7 @@ app.get("/api/images", async (req, res) => {
     files.forEach((file, index) => {
       data.push({
         name: file,
+        saveAsName: file,
         url: `http://localhost:8000/uploads/${file}`,
         changesMade: false,
         position: index,

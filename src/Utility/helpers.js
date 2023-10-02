@@ -23,7 +23,7 @@ export const uploadFiles = (files) => {
   let formData = new FormData();
 
   for (const file of files) {
-    formData.append("image_file", dataURItoBlob(file.url), file.name);
+    formData.append("image_file", dataURItoBlob(file.url), file.saveAsName);
   }
 
   for (const pair of formData.entries()) {
@@ -166,7 +166,10 @@ export const isDeleteClick = (element) => {
 };
 
 export const setChangesMade = (image_file) => {
+  let position = image_file.position;
+
   image_file.changesMade = true;
+  image_file.saveAsName = `Slide${position + 1}.png`;
 };
 
 function dataURItoBlob(dataURI) {

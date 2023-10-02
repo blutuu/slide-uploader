@@ -78,10 +78,9 @@ const DragDrop = ({
         onClick={() => {
           uploadFiles(
             droppedFiles.filter((slide, index) => {
-              return slide.changesMade == true;
+              return slide.changesMade;
             })
           );
-          updateFiles(droppedFiles);
         }}
       >
         Save
