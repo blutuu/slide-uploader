@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
     isDragging: state.isDragging,
     isSlideDragging: state.isSlideDragging,
     droppedFiles: state.droppedFiles,
+    deletedFiles: state.deletedFiles,
     savedFiles: state.savedFiles,
     selectedSlide: state.selectedSlide,
   };
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const SlideContainer = ({
   droppedFiles,
+  deletedFiles,
   savedFiles,
   onSlideSelection,
   onUpdateSlidePosition,
@@ -40,6 +42,7 @@ const SlideContainer = ({
       imageFile={image}
       setSlideDrag={setSlideDrag}
       droppedFiles={droppedFiles}
+      deletedFiles={deletedFiles}
       savedFiles={savedFiles}
       isSlideDragging={isSlideDragging}
       selectSlide={onSlideSelection}

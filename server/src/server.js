@@ -11,9 +11,9 @@ const port = process.env.PORT || 8000;
 const log = npmlog;
 
 const fileFilter = (req, file, cb) => {
-  var filetypes = /jpg|jpeg|png|gif/;
-  var mimetype = filetypes.test(file.mimetype);
-  var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  let filetypes = /jpg|jpeg|png|gif/;
+  let mimetype = filetypes.test(file.mimetype);
+  let extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
   if (mimetype && extname) {
     return cb(null, true);
@@ -101,23 +101,25 @@ app.get("/api/images", async (req, res) => {
   });
 });
 
-// Updates the filenames that are in the uploads folder
-app.post("/api/update", (req, res) => {
+// An endpoint that deletes files from an array of file names
+app.post("/api/images/delete", (req, res) => {
   const directoryPath = path.join(__dirname, "../uploads");
+  const files = req.body;
 
-  fs.readdir(directoryPath, (err, files) => {
-    if (!req.body || files.length == 0) {
-      log.info("Updating images", "No updates applied");
-      return res.status(200).send("No updates applied");
-    }
-    console.log(files.indexOf("Slide23.png"));
+  files.forEach((file) => {
+    const filePath = path.join(directoryPath, file);
+    console.log(filePath);
 
-    for (const file of req.body) {
-      console.log(`${file.name} ${file.position}`);
-    }
-
-    res.status(200).send("Files updated successfully");
+    fs.unlinkSync(filePath, (err) => {
+      if (err) {
+        log.error("Deleting images", "Unable to delete file: " + err);
+        return res.status(500).send("Unable to delete file: " + err);
+      }
+    });
   });
+
+  log.info("Deleting images", "Files successfully deleted");
+  res.status(200).send("Files successfully deleted");
 });
 
 // An endpoint that deletes a file from the uploads folder

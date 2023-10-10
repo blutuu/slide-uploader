@@ -14,6 +14,7 @@ import {
   setSelectedSlide,
   deleteSlide,
   updateSavedFiles,
+  updateDeletedSlides,
 } from "../Redux/actions";
 
 const mapStateToProps = (state) => {
@@ -21,6 +22,8 @@ const mapStateToProps = (state) => {
     isDragging: state.isDragging,
     isSlideDragging: state.isSlideDragging,
     droppedFiles: state.droppedFiles,
+    filesAdded: state.filesAdded,
+    deletedFiles: state.deletedFiles,
     selectedSlide: state.selectedSlide,
   };
 };
@@ -31,6 +34,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetSlideDrag: (value) => dispatch(setSlideDrag(value)),
     onProcessDrop: (event) => processDrop(event, dispatch),
     onUpdateFiles: (value) => dispatch(updateSlideFiles(value)),
+    onUpdateDeleted: (value) => dispatch(updateDeletedSlides(value)),
     onSaveFiles: (value) => dispatch(updateSavedFiles(value)),
     onSlideSelection: (value) => dispatch(setSelectedSlide(value)),
     onDeleteSlide: (value) => dispatch(deleteSlide(value)),
@@ -42,8 +46,11 @@ function App({
   onSetSlideDrag,
   onProcessDrop,
   onUpdateFiles,
+  onUpdateDeleted,
   onSaveFiles,
   droppedFiles,
+  filesAdded,
+  deletedFiles,
   selectedSlide,
   isDragging,
   isSlideDragging,
@@ -57,7 +64,10 @@ function App({
         isDragging={isDragging}
         isSlideDragging={isSlideDragging}
         droppedFiles={droppedFiles}
+        filesAdded={filesAdded}
+        deletedFiles={deletedFiles}
         onUpdateFiles={onUpdateFiles}
+        updateDeletedFiles={onUpdateDeleted}
         onSaveFiles={onSaveFiles}
       >
         <SlideViewer

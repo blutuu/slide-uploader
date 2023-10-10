@@ -82,13 +82,13 @@ export const getImages = async () => {
   return images;
 };
 
-export const updateFiles = (files) => {
-  let url = "http://localhost:8000/api/update";
+export const deleteFiles = async (files) => {
+  let data;
+  let url = "http://localhost:8000/api/images/delete";
 
-  fetch(url, {
+  await fetch(url, {
     method: "POST",
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(files),
@@ -97,15 +97,20 @@ export const updateFiles = (files) => {
       // Checking whether the response is text or JSON
       response.text().then((text) => {
         try {
-          const data = JSON.parse(text);
+          data = JSON.parse(text);
         } catch {
-          console.log(text);
+          data = text;
+          console.log(data);
         }
+
+        return text;
       });
     })
     .catch((error) => {
       console.log(error);
     });
+
+  return data;
 };
 
 export const getSlidePosition = (slide_element) => {

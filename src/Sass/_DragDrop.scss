@@ -49,5 +49,15 @@
       background-color: lighten($oe_darkblue, 5);
       transition: .1s;
     }
+    &+div {
+      display: block;
+      width: 200px;
+      margin: 0 auto;
+      margin-top: 1rem;
+      padding: 0.35rem 1rem;
+      border-radius: 0.35rem;
+      background-color: #191919c7;
+      color: white;
+    }
   }
 }

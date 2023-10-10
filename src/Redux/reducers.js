@@ -9,13 +9,16 @@ import {
   DELETE_SLIDE,
   SET_SLIDE_DELETED,
   UPDATE_SLIDE_POSITION,
+  UPDATE_DELETED_SLIDES,
 } from "./constants";
 
 const initialStateDragDrop = {
   isDragging: false,
   isSlideDragging: false,
   droppedFiles: [],
+  filesAdded: 0,
   savedFiles: [],
+  deletedFiles: [],
   selectedSlide: {},
   isSlideDeleted: false,
   error: "",
@@ -34,6 +37,7 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
         ...state,
         isDragging: false,
         droppedFiles: [...state.droppedFiles, ...action.payload],
+        filesAdded: state.filesAdded + action.payload.length,
         error: "",
       };
 
@@ -53,7 +57,14 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
       return { ...state, selectedSlide: action.payload };
 
     case DELETE_SLIDE:
-      return { ...state, droppedFiles: action.payload };
+      return {
+        ...state,
+        droppedFiles: action.payload[0],
+        deletedFiles: action.payload[1],
+      };
+
+    case UPDATE_DELETED_SLIDES:
+      return { ...state, deletedFiles: action.payload };
 
     case SET_SLIDE_DELETED:
       return { ...state, isSlideDeleted: action.payload };

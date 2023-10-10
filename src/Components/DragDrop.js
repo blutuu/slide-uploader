@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   dragEnterHandler,
   dragExitHandler,
   dragOverHandler,
 } from "../Utility/handlers";
-import { getImages, uploadFiles, updateFiles } from "../Utility/helpers";
+import { getImages, uploadFiles, deleteFiles } from "../Utility/helpers";
 
 const DragDrop = ({
   children,
@@ -13,7 +13,10 @@ const DragDrop = ({
   isDragging,
   isSlideDragging,
   droppedFiles,
+  filesAdded,
+  deletedFiles,
   onUpdateFiles,
+  updateDeletedFiles,
   onSaveFiles,
 }) => {
   useEffect(() => {
@@ -64,6 +67,7 @@ const DragDrop = ({
         action="/"
         className="slide-upload-form"
         encType="multipart/form-data"
+        style={{ display: "none" }}
       >
         <div className="tc f5 mt4 mb5" id="drag-drop-message">
           <strong>Click a slide to upload</strong>
@@ -74,17 +78,27 @@ const DragDrop = ({
         <input type="file" name="slideFile" id="slide-input" />
       </form>
       <button
+        disabled={false}
         className="savebutton"
         onClick={() => {
+          deleteFiles(deletedFiles).then((text) => {
+            console.log(text);
+          });
           uploadFiles(
             droppedFiles.filter((slide, index) => {
               return slide.changesMade;
             })
           );
+          updateDeletedFiles([]);
         }}
       >
-        Save
+        Update
       </button>
+      <div>
+        <span>Files added: {filesAdded || 0}</span>
+        <br />
+        <span>Files to be deleted: {deletedFiles.length || 0}</span>
+      </div>
     </div>
   );
 };

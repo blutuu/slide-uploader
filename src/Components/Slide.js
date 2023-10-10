@@ -41,6 +41,7 @@ const Slide = ({
   setSlideDrag,
   isSlideDragging,
   droppedFiles,
+  deletedFiles,
   savedFiles,
   selectSlide,
   updateFiles,
@@ -95,7 +96,6 @@ const Slide = ({
     slideMouseDrag(event);
     setNewSlidePosition(getSlidePosition(slideRef.current));
     setDragActive(slideRef.current);
-    // setChangesMade(imageFile);
 
     if (isSlideDragging) return;
 
@@ -126,13 +126,17 @@ const Slide = ({
   };
 
   const onAnimationEnd = (event) => {
+    const tempDeletedFiles = savedFiles.includes(imageFile)
+      ? [...deletedFiles, imageFile.name]
+      : [...deletedFiles];
+
     removeDeleteAnimation(slideRef.current);
-    // hideElement(event.target);
-    deleteSlide(
+    deleteSlide([
       droppedFiles.filter((slide, index) => {
         return index !== getSlidePosition(event.target);
-      })
-    );
+      }),
+      tempDeletedFiles,
+    ]);
   };
 
   const toggleSelection = () => {
