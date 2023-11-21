@@ -18,6 +18,8 @@ const DragDrop = ({
   onUpdateFiles,
   updateDeletedFiles,
   onSaveFiles,
+  setReset,
+  reset,
 }) => {
   useEffect(() => {
     getImages().then((files) => {
@@ -81,18 +83,27 @@ const DragDrop = ({
         disabled={false}
         className="savebutton"
         onClick={() => {
-          deleteFiles(deletedFiles).then((text) => {
-            console.log(text);
-          });
           uploadFiles(
-            droppedFiles.filter((slide, index) => {
+            droppedFiles.filter((slide) => {
               return slide.changesMade;
             })
           );
-          updateDeletedFiles([]);
+          setReset(true);
         }}
       >
         Update
+      </button>
+      <button
+        disabled={false}
+        className="savebutton"
+        onClick={() => {
+          deleteFiles(deletedFiles).then((text) => {
+            console.log(text);
+          });
+          updateDeletedFiles([]);
+        }}
+      >
+        Delete
       </button>
       <div>
         <span>Files added: {filesAdded || 0}</span>

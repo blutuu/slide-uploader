@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Slide from "./Slide";
-import { setSelectedSlide, updateSlidePosition } from "../Redux/actions";
+import {
+  setSelectedSlide,
+  updateSlidePosition,
+  setReset,
+} from "../Redux/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -11,6 +15,7 @@ const mapStateToProps = (state) => {
     deletedFiles: state.deletedFiles,
     savedFiles: state.savedFiles,
     selectedSlide: state.selectedSlide,
+    reset: state.reset,
   };
 };
 
@@ -18,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSlideSelection: (value) => dispatch(setSelectedSlide(value)),
     onUpdateSlidePosition: (value) => dispatch(updateSlidePosition(value)),
+    onSetReset: (value) => dispatch(setReset(value)),
   };
 };
 
@@ -31,10 +37,10 @@ const SlideContainer = ({
   isSlideDragging,
   onUpdateFiles,
   onDeleteSlide,
+  onSetReset,
+  reset,
 }) => {
-  useEffect(() => {
-    console.log(droppedFiles);
-  }, [JSON.stringify(droppedFiles)]);
+  useEffect(() => {}, [JSON.stringify(droppedFiles)]);
 
   const slides = droppedFiles.map((image, key) => (
     <Slide
@@ -49,6 +55,8 @@ const SlideContainer = ({
       updateFiles={onUpdateFiles}
       updateSlidePosition={onUpdateSlidePosition}
       deleteSlide={onDeleteSlide}
+      setReset={onSetReset}
+      reset={reset}
     ></Slide>
   ));
 

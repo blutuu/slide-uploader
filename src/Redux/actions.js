@@ -11,6 +11,7 @@ import {
   SET_SLIDE_DELETED,
   UPDATE_SLIDE_POSITION,
   UPDATE_DELETED_SLIDES,
+  SET_RESET,
 } from "./constants";
 
 export const setDrag = (value) => ({
@@ -70,5 +71,10 @@ export const updateDeletedSlides = (value) => ({
 
 export const setSlideDeleted = (value) => ({
   type: SET_SLIDE_DELETED,
+  payload: value,
+});
+
+export const setReset = (value) => ({
+  type: SET_RESET,
   payload: value,
 });

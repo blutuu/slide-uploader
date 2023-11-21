@@ -1,5 +1,23 @@
+import { dir } from "console";
 import fs from "fs";
+import fsp from "fs/promises";
 import path from "path";
+import npmlog from "npmlog";
+
+const log = npmlog;
+
+export const ifDirEmpty = (err) => {
+  if (err) {
+    fs.mkdirSync("./uploads");
+    log.error("Reordering Files", "Unable to scan directory: " + err);
+  }
+};
+
+export const ifDirNotExist = (files) => {
+  if (files.length == 0) {
+    log.info("Reordering Files", "Uploads directory empty.");
+  }
+};
 
 // A function that converts blob to image
 const blobToImage = (blob) => {
@@ -35,5 +53,70 @@ export const readFiles = (directoryPath, onFileContent, onError) => {
         onFileContent(file, content);
       });
     });
+  });
+};
+
+// Sort files alphanumerically
+export const sortFiles = (files) => {
+  const collator = new Intl.Collator("en", {
+    numeric: true,
+    sensitivity: "base",
+  });
+
+  return files.sort((a, b) => collator.compare(a, b));
+};
+
+// Rename files based on index
+export const reorderFiles = async () => {
+  const directoryPath = path.join(__dirname, "../uploads");
+
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      fs.mkdirSync("./uploads");
+      log.error("Reordering Files", "Unable to scan directory: " + err);
+    }
+
+    if (files.length == 0) {
+      log.info("Reordering Files", "Uploads directory empty.");
+    }
+
+    console.log(files);
+    files.forEach((file, index) => {
+      const oldPath = path.join(directoryPath, file);
+      const newPath = path.join(directoryPath, `Slide${index + 1}.png`);
+
+      fsp.rename(oldPath, newPath).catch((error) => {
+        console.log(error);
+      });
+    });
+  });
+};
+
+export const deleteFiles = (files) => {
+  const directoryPath = path.join(__dirname, "../uploads");
+
+  files.forEach((file) => {
+    const filePath = path.join(directoryPath, file);
+
+    fsp
+      .access(filePath)
+      .then(() => {
+        fsp
+          .unlink(filePath)
+          .then(() => {
+            reorderFiles().then(() => {
+              console.log(files);
+              log.info("Reordering Files", "Files successfully reordered");
+            });
+          })
+
+          .catch((error) => {
+            log.error("Deleting images", "Unable to delete file: " + error);
+            return res.status(500).send("Unable to delete file: " + error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   });
 };

@@ -5,7 +5,6 @@ import { Icon } from "@iconify/react";
 import NewIcon from "./NewIcon";
 import {
   initializeEvent,
-  onClickDelete,
   slideMouseDrag,
   slideMouseDrop,
 } from "../Utility/handlers";
@@ -18,9 +17,8 @@ import {
   setDragActive,
   setSelection,
   setChangesMade,
-  isDeleteClick,
   removeDeleteAnimation,
-  updatePositionAttribute,
+  removeChangesMade,
 } from "../Utility/helpers";
 
 const SlideItem = styled.div`
@@ -45,8 +43,9 @@ const Slide = ({
   savedFiles,
   selectSlide,
   updateFiles,
-  updateSlidePosition,
   deleteSlide,
+  setReset,
+  reset,
 }) => {
   const [oldSlidePosition, setOldSlidePosition] = useState(0);
   const [newSlidePosition, setNewSlidePosition] = useState(0);
@@ -57,19 +56,32 @@ const Slide = ({
   const slideRef = useRef(null);
   const deleteButtonRef = useRef(null);
   const slides = document.querySelectorAll(".slide");
+  let changesRemaining = [];
 
   useEffect(() => {
     const tempArray = [...droppedFiles];
     const tempPosition = tempArray.findIndex(
       (slide) => slide.name === imageFile.name
     );
+    changesRemaining = droppedFiles.filter((slide) => {
+      return slide.changesMade;
+    });
 
-    if (tempPosition == imageFile.position) return;
+    if (tempPosition == imageFile.position) {
+      removeChangesMade(imageFile);
+      setChangesMadeState(false);
+
+      if (changesRemaining.length - 1 === 0) {
+        setReset(false);
+      }
+      return;
+    }
 
     imageFile.position = tempPosition;
+
     setChangesMade(imageFile);
     setChangesMadeState(true);
-  }, []);
+  }, [reset]);
 
   const onMouseDown = (event) => {
     setOldSlidePosition(getSlidePosition(slideRef.current));

@@ -10,6 +10,7 @@ import {
   SET_SLIDE_DELETED,
   UPDATE_SLIDE_POSITION,
   UPDATE_DELETED_SLIDES,
+  SET_RESET,
 } from "./constants";
 
 const initialStateDragDrop = {
@@ -22,6 +23,7 @@ const initialStateDragDrop = {
   selectedSlide: {},
   isSlideDeleted: false,
   error: "",
+  reset: false,
 };
 
 export const slideReducer = (state = initialStateDragDrop, action = {}) => {
@@ -68,6 +70,9 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
 
     case SET_SLIDE_DELETED:
       return { ...state, isSlideDeleted: action.payload };
+
+    case SET_RESET:
+      return { ...state, reset: action.payload };
 
     default:
       return state;

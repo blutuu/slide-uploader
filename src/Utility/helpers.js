@@ -22,6 +22,8 @@ export const uploadFiles = (files) => {
   let url = "http://localhost:8000/api/upload";
   let formData = new FormData();
 
+  if (files.length == 0) return;
+
   for (const file of files) {
     formData.append("image_file", dataURItoBlob(file.url), file.saveAsName);
   }
@@ -74,6 +76,7 @@ export const getImages = async () => {
 
         return image;
       });
+      console.log(data);
     })
     .catch((error) => {
       console.log(error);
@@ -85,6 +88,8 @@ export const getImages = async () => {
 export const deleteFiles = async (files) => {
   let data;
   let url = "http://localhost:8000/api/images/delete";
+
+  if (files.length == 0) return;
 
   await fetch(url, {
     method: "POST",
@@ -175,6 +180,10 @@ export const setChangesMade = (image_file) => {
 
   image_file.changesMade = true;
   image_file.saveAsName = `Slide${position + 1}.png`;
+};
+
+export const removeChangesMade = (image_file) => {
+  image_file.changesMade = false;
 };
 
 function dataURItoBlob(dataURI) {

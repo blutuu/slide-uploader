@@ -7,7 +7,6 @@ import "./index.css";
 import App from "./Containers/App";
 import { slideReducer } from "./Redux/reducers";
 import reportWebVitals from "./reportWebVitals";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const logger = createLogger({ collapsed: true });
 const rootReducer = slideReducer;

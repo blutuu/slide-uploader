@@ -4,7 +4,9 @@ import path from "path";
 import cors from "cors";
 import multer from "multer";
 import fs from "fs";
+import fsp from "fs/promises";
 import npmlog from "npmlog";
+import { deleteFiles, reorderFiles, sortFiles } from "./serverhelpers";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -72,7 +74,6 @@ app.get("/api/images", async (req, res) => {
   const directoryPath = path.join(__dirname, "../uploads");
 
   // Read all files from the uploads folder
-
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
       fs.mkdirSync("./uploads");
@@ -84,6 +85,8 @@ app.get("/api/images", async (req, res) => {
       log.info("Getting images", "Uploads directory empty.");
       return res.status(200).send("No uploads available.");
     }
+
+    sortFiles(files);
 
     // Read each file and get its contents
     files.forEach((file, index) => {
@@ -106,36 +109,10 @@ app.post("/api/images/delete", (req, res) => {
   const directoryPath = path.join(__dirname, "../uploads");
   const files = req.body;
 
-  files.forEach((file) => {
-    const filePath = path.join(directoryPath, file);
-    console.log(filePath);
-
-    fs.unlinkSync(filePath, (err) => {
-      if (err) {
-        log.error("Deleting images", "Unable to delete file: " + err);
-        return res.status(500).send("Unable to delete file: " + err);
-      }
-    });
-  });
+  deleteFiles(files);
 
   log.info("Deleting images", "Files successfully deleted");
   res.status(200).send("Files successfully deleted");
-});
-
-// An endpoint that deletes a file from the uploads folder
-app.delete("/api/images/:name", (req, res) => {
-  const directoryPath = path.join(__dirname, "../uploads");
-  const filePath = path.join(directoryPath, req.params.name);
-
-  fs.unlink(filePath, (err) => {
-    if (err) {
-      log.error("Deleting image", "Unable to delete file: " + err);
-      return res.status(500).send("Unable to delete file: " + err);
-    }
-
-    log.info("Deleting image", "File successfully deleted");
-    res.status(200).send("File successfully deleted");
-  });
 });
 
 app.listen(port, () => console.log("Listening on port 8000"));
