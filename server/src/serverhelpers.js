@@ -69,54 +69,98 @@ export const sortFiles = (files) => {
 // Rename files based on index
 export const reorderFiles = async () => {
   const directoryPath = path.join(__dirname, "../uploads");
+  let counter = 0;
+  let index = 0;
 
-  fs.readdir(directoryPath, (err, files) => {
-    if (err) {
-      fs.mkdirSync("./uploads");
-      log.error("Reordering Files", "Unable to scan directory: " + err);
-    }
-
-    if (files.length == 0) {
-      log.info("Reordering Files", "Uploads directory empty.");
-    }
-
-    console.log(files);
-    files.forEach((file, index) => {
-      const oldPath = path.join(directoryPath, file);
-      const newPath = path.join(directoryPath, `Slide${index + 1}.png`);
-
-      fsp.rename(oldPath, newPath).catch((error) => {
-        console.log(error);
-      });
-    });
-  });
-};
-
-export const deleteFiles = (files) => {
-  const directoryPath = path.join(__dirname, "../uploads");
-
-  files.forEach((file) => {
-    const filePath = path.join(directoryPath, file);
-
+  return new Promise((resolve, reject) => {
     fsp
-      .access(filePath)
-      .then(() => {
-        fsp
-          .unlink(filePath)
-          .then(() => {
-            reorderFiles().then(() => {
-              console.log(files);
-              log.info("Reordering Files", "Files successfully reordered");
-            });
-          })
+      .readdir(directoryPath)
+      .then((files) => {
+        if (files.length == 0) {
+          log.info("Reordering Files", "Uploads directory empty.");
+        }
 
-          .catch((error) => {
-            log.error("Deleting images", "Unable to delete file: " + error);
-            return res.status(500).send("Unable to delete file: " + error);
-          });
+        (async () => {
+          for (const file of files) {
+            const oldPath = path.join(directoryPath, file);
+            const newPath = path.join(directoryPath, `Slide${index + 1}.png`);
+
+            await fsp
+              .rename(oldPath, newPath)
+              .then(() => {
+                log.info(
+                  "Reordering Files(INDEX)",
+                  `${file} renamed to Slide${counter + 1}.png`
+                );
+                console.log(counter);
+                if (counter++ == files.length - 1)
+                  resolve(`Files successfully reordered ${counter}`);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            index++;
+          }
+        })();
       })
       .catch((error) => {
-        console.log(error);
+        fs.mkdirSync("./uploads");
+        log.error("Reordering Files", "Unable to scan directory: " + err);
       });
+  });
+  // fs.readdir(directoryPath, (err, files) => {
+  //   if (err) {
+  //     fs.mkdirSync("./uploads");
+  //     log.error("Reordering Files", "Unable to scan directory: " + err);
+  //   }
+
+  //   if (files.length == 0) {
+  //     log.info("Reordering Files", "Uploads directory empty.");
+  //   }
+
+  //   console.log(files);
+  //   files.forEach((file, index) => {
+  //     const oldPath = path.join(directoryPath, file);
+  //     const newPath = path.join(directoryPath, `Slide${index + 1}.png`);
+
+  //     fsp.rename(oldPath, newPath).catch((error) => {
+  //       console.log(error);
+  //     });
+  //   });
+  // });
+};
+
+export const deleteFiles = async (files) => {
+  const directoryPath = path.join(__dirname, "../uploads");
+
+  return new Promise((resolve, reject) => {
+    files.forEach((file) => {
+      const filePath = path.join(directoryPath, file);
+
+      fsp
+        .access(filePath)
+        .then(() => {
+          console.log("Deleting file: " + file);
+
+          fsp
+            .unlink(filePath)
+            .then(() => {
+              resolve("File deleted");
+            })
+            // .then(() => {
+            //   reorderFiles().then(() => {
+            //     console.log(files);
+            //     log.info("Reordering Files", "Files successfully reordered");
+            //   });
+            // })
+            .catch((error) => {
+              log.error("Deleting images", "Unable to delete file: " + error);
+              return res.status(500).send("Unable to delete file: " + error);
+            });
+        })
+        .catch((error) => {
+          reject("Unable to delete file: " + error);
+        });
+    });
   });
 };

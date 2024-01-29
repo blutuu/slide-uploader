@@ -72,7 +72,7 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
       return { ...state, isSlideDeleted: action.payload };
 
     case SET_RESET:
-      return { ...state, reset: action.payload };
+      return { ...state, filesAdded: 0, reset: action.payload };
 
     default:
       return state;

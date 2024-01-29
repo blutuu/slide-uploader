@@ -138,8 +138,11 @@ const Slide = ({
   };
 
   const onAnimationEnd = (event) => {
+    const fileToBeDeleted = imageFile.changesMade
+      ? imageFile.name
+      : imageFile.saveAsName;
     const tempDeletedFiles = savedFiles.includes(imageFile)
-      ? [...deletedFiles, imageFile.name]
+      ? [...deletedFiles, fileToBeDeleted]
       : [...deletedFiles];
 
     removeDeleteAnimation(slideRef.current);
@@ -191,6 +194,8 @@ const Slide = ({
         onMouseDown={deleteButtonClicked}
       />
       <img src={imageFile.url} draggable="false" alt={imageFile.name} />
+      <span className="db">{imageFile.name}</span>
+      <span className="db">{imageFile.saveAsName}</span>
     </SlideItem>
   );
 };

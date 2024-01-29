@@ -118,6 +118,33 @@ export const deleteFiles = async (files) => {
   return data;
 };
 
+export const reorderFiles = async (files) => {
+  let data;
+  let url = "http://localhost:8000/api/images/reorder";
+
+  await fetch(url, {
+    method: "POST",
+  })
+    .then((response) => {
+      // Checking whether the response is text or JSON
+      response.text().then((text) => {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = text;
+          console.log(data);
+        }
+
+        return text;
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return data;
+};
+
 export const getSlidePosition = (slide_element) => {
   return Array.from(slide_element.parentNode.children).indexOf(slide_element);
 };

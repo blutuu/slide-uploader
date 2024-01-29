@@ -109,10 +109,32 @@ app.post("/api/images/delete", (req, res) => {
   const directoryPath = path.join(__dirname, "../uploads");
   const files = req.body;
 
-  deleteFiles(files);
+  deleteFiles(files)
+    .then(() => {
+      reorderFiles().then((data) => {
+        console.log(files);
+        log.info("Reordering Files(THEN)", data);
+      });
 
-  log.info("Deleting images", "Files successfully deleted");
-  res.status(200).send("Files successfully deleted");
+      log.info("Deleting images(THEN)", "Files successfully deleted");
+      res.status(200).send("Files successfully deleted");
+    })
+    .catch((error) => {
+      log.error("Deleting images(THEN)", "Unable to delete file: " + error);
+      res.status(500).send("Unable to delete file: " + error);
+    });
+});
+
+// An endpoint that reorders the files in the 'uploads' directory
+app.post("/api/images/reorder", async (req, res) => {
+  await reorderFiles()
+    .then((data) => {
+      log.info("Reordering Files(THEN)", data);
+      res.status(200).send("Files successfully reordered");
+    })
+    .catch((error) => {
+      log.error("Reordering Files", error);
+    });
 });
 
 app.listen(port, () => console.log("Listening on port 8000"));

@@ -4,7 +4,12 @@ import {
   dragExitHandler,
   dragOverHandler,
 } from "../Utility/handlers";
-import { getImages, uploadFiles, deleteFiles } from "../Utility/helpers";
+import {
+  getImages,
+  uploadFiles,
+  deleteFiles,
+  reorderFiles,
+} from "../Utility/helpers";
 
 const DragDrop = ({
   children,
@@ -93,6 +98,7 @@ const DragDrop = ({
       >
         Update
       </button>
+
       <button
         disabled={false}
         className="savebutton"
@@ -105,6 +111,16 @@ const DragDrop = ({
       >
         Delete
       </button>
+      <button
+        disabled={false}
+        className="savebutton"
+        onClick={() => {
+          reorderFiles();
+        }}
+      >
+        Reorder
+      </button>
+
       <div>
         <span>Files added: {filesAdded || 0}</span>
         <br />
