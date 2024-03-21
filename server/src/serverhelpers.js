@@ -69,7 +69,6 @@ export const sortFiles = (files) => {
 // Rename files based on index
 export const reorderFiles = async () => {
   const directoryPath = path.join(__dirname, "../uploads");
-  let counter = 0;
   let index = 0;
 
   return new Promise((resolve, reject) => {
@@ -90,11 +89,10 @@ export const reorderFiles = async () => {
               .then(() => {
                 log.info(
                   "Reordering Files(INDEX)",
-                  `${file} renamed to Slide${counter + 1}.png`
+                  `${file} renamed to Slide${index + 1}.png`
                 );
-                console.log(counter);
-                if (counter++ == files.length - 1)
-                  resolve(`Files successfully reordered ${counter}`);
+                if (index == files.length - 1)
+                  resolve(`Files successfully reordered ${index}`);
               })
               .catch((error) => {
                 console.log(error);

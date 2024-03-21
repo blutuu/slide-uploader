@@ -111,7 +111,7 @@ const DragDrop = ({
       >
         Delete
       </button>
-      <button
+      {/* <button
         disabled={false}
         className="savebutton"
         onClick={() => {
@@ -119,7 +119,7 @@ const DragDrop = ({
         }}
       >
         Reorder
-      </button>
+      </button> */}
 
       <div>
         <span>Files added: {filesAdded || 0}</span>
