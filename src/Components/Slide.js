@@ -194,8 +194,8 @@ const Slide = ({
         onMouseDown={deleteButtonClicked}
       />
       <img src={imageFile.url} draggable="false" alt={imageFile.name} />
-      <span className="db">{imageFile.name}</span>
-      <span className="db">{imageFile.saveAsName}</span>
+      {/* <span className="db">{imageFile.name}</span>
+      <span className="db">{imageFile.saveAsName}</span> */}
     </SlideItem>
   );
 };

@@ -1,15 +1,19 @@
 // An express server with a simple initial route.
 import express from "express";
 import path from "path";
+import { fileURLToPath } from "url";
 import cors from "cors";
 import multer from "multer";
+import compression from "compression";
 import fs from "fs";
-import fsp from "fs/promises";
 import npmlog from "npmlog";
 import { deleteFiles, reorderFiles, sortFiles } from "./serverhelpers";
 
 const app = express();
 const port = process.env.PORT || 8000;
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
 const log = npmlog;
 
 const fileFilter = (req, file, cb) => {
@@ -48,6 +52,11 @@ const upload = multer({
   storage: storage,
 });
 
+app.use(
+  compression({
+    level: 9,
+  })
+);
 app.use(express.static(path.join(__dirname, "../build")));
 app.use(express.json({ limit: "10mb" }));
 app.use(cors());
@@ -56,6 +65,10 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 //////////////////////////////
 //  *  Endpoints            //
 //////////////////////////////
+
+app.get(/^(?!\/api).+/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 app.get("/api", (req, res) => {
   res.status(200).send("Hello from the API");
@@ -137,4 +150,4 @@ app.post("/api/images/reorder", async (req, res) => {
     });
 });
 
-app.listen(port, () => console.log("Listening on port 8000"));
+app.listen(port, () => console.log(`Listening on port ${port}`));
