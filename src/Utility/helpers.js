@@ -19,7 +19,7 @@ export const extractFileData = (file) => {
 };
 
 export const uploadFiles = (files) => {
-  let url = "slidemanager/api/upload";
+  let url = "/slidemanager/api/upload";
   let formData = new FormData();
 
   if (files.length == 0) return;
@@ -55,7 +55,7 @@ export const uploadFiles = (files) => {
 
 // A function that receives files from a server endpoint
 export const getImages = async () => {
-  let url = "slidemanager/api/images";
+  let url = "/slidemanager/api/images";
   let images = [];
 
   await fetch(url)
@@ -87,7 +87,7 @@ export const getImages = async () => {
 
 export const deleteFiles = async (files) => {
   let data;
-  let url = "slidemanager/api/images/delete";
+  let url = "/slidemanager/api/images/delete";
 
   if (files.length == 0) return;
 
@@ -120,7 +120,7 @@ export const deleteFiles = async (files) => {
 
 export const reorderFiles = async (files) => {
   let data;
-  let url = "slidemanager/api/images/reorder";
+  let url = "/slidemanager/api/images/reorder";
 
   await fetch(url, {
     method: "POST",
