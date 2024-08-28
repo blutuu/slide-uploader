@@ -26,6 +26,9 @@ const DragDrop = ({
   setReset,
   reset,
 }) => {
+  const stagingUrl = "/slidemanager/api/upload";
+  const publishingUrl = "/slidemanager/api/publish";
+
   useEffect(() => {
     getImages().then((files) => {
       onUpdateFiles(files);
@@ -91,12 +94,28 @@ const DragDrop = ({
           uploadFiles(
             droppedFiles.filter((slide) => {
               return slide.changesMade;
-            })
+            }),
+            stagingUrl
           );
           setReset(true);
         }}
       >
         Update
+      </button>
+      <button
+        disabled={false}
+        className="savebutton"
+        onClick={() => {
+          uploadFiles(
+            droppedFiles.filter((slide) => {
+              return slide.changesMade;
+            }),
+            publishingUrl
+          );
+          setReset(true);
+        }}
+      >
+        Publish
       </button>
 
       <button

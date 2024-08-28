@@ -18,8 +18,7 @@ export const extractFileData = (file) => {
   return promise;
 };
 
-export const uploadFiles = (files) => {
-  let url = "/slidemanager/api/upload";
+export const uploadFiles = (files, url) => {
   let formData = new FormData();
 
   if (files.length == 0) return;
