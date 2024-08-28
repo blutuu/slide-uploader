@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { Toggle } from "./Buttons";
 import {
   dragEnterHandler,
   dragExitHandler,
   dragOverHandler,
 } from "../Utility/handlers";
-import {
-  getImages,
-  uploadFiles,
-  deleteFiles,
-  reorderFiles,
-} from "../Utility/helpers";
+import { getImages, uploadFiles, deleteFiles } from "../Utility/helpers";
 
 const DragDrop = ({
   children,
@@ -130,15 +126,7 @@ const DragDrop = ({
       >
         Delete
       </button>
-      {/* <button
-        disabled={false}
-        className="savebutton"
-        onClick={() => {
-          reorderFiles();
-        }}
-      >
-        Reorder
-      </button> */}
+      <Toggle buttonText="Publish" />
 
       <div>
         <span>Files added: {filesAdded || 0}</span>
