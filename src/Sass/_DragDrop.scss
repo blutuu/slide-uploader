@@ -25,13 +25,15 @@
 
     > * {
       display: block;
-      // margin: 0.35rem 0;
       line-height: 1.35rem;
     }
   }
 
-  input, button {
-    position: relative;
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .savebutton {
@@ -50,7 +52,8 @@
       background-color: lighten($oe_darkblue, 5);
       transition: .1s;
     }
-    &+div {
+  }
+    .infobox {
       display: block;
       width: 200px;
       margin: 0 auto;
@@ -60,5 +63,4 @@
       background-color: #191919c7;
       color: white;
     }
-  }
 }

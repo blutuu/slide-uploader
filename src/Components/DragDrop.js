@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Toggle } from "./Buttons";
+import { SubmitButton, ToggleSwitch } from "./Inputs";
 import {
   dragEnterHandler,
   dragExitHandler,
@@ -83,52 +83,27 @@ const DragDrop = ({
         <label className="button" htmlFor="slide-input"></label>
         <input type="file" name="slideFile" id="slide-input" />
       </form>
-      <button
-        disabled={false}
-        className="savebutton"
-        onClick={() => {
-          uploadFiles(
-            droppedFiles.filter((slide) => {
-              return slide.changesMade;
-            }),
-            stagingUrl
-          );
-          setReset(true);
-        }}
-      >
-        Update
-      </button>
-      <button
-        disabled={false}
-        className="savebutton"
-        onClick={() => {
-          uploadFiles(
-            droppedFiles.filter((slide) => {
-              return slide.changesMade;
-            }),
-            publishingUrl
-          );
-          setReset(true);
-        }}
-      >
-        Publish
-      </button>
+      <div className="button-wrapper">
+        <SubmitButton
+          buttonTitle="Update"
+          callback={() => {
+            deleteFiles(deletedFiles).then((text) => {
+              console.log(text);
+            });
+            updateDeletedFiles([]);
+            uploadFiles(
+              droppedFiles.filter((slide) => {
+                return slide.changesMade;
+              }),
+              stagingUrl
+            );
+            setReset(true);
+          }}
+        />
+        <ToggleSwitch toggleLabel="Publish" />
+      </div>
 
-      <button
-        disabled={false}
-        className="savebutton"
-        onClick={() => {
-          deleteFiles(deletedFiles).then((text) => {
-            console.log(text);
-          });
-          updateDeletedFiles([]);
-        }}
-      >
-        Delete
-      </button>
-      <Toggle buttonText="Publish" />
-
-      <div>
+      <div className="infobox">
         <span>Files added: {filesAdded || 0}</span>
         <br />
         <span>Files to be deleted: {deletedFiles.length || 0}</span>
