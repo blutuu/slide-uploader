@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+import { Tooltip } from "@mui/material";
+import { TooltipDark } from "./SubComponents/CustomMUI";
+import InfoIcon from "@mui/icons-material/Info";
 import { SubmitButton, ToggleSwitch } from "./Inputs";
 import {
   dragEnterHandler,
@@ -100,7 +103,17 @@ const DragDrop = ({
             setReset(true);
           }}
         />
-        <ToggleSwitch toggleLabel="Publish" />
+        <div className="relative flex items-center justify-center">
+          <ToggleSwitch toggleLabel="Publish" />
+          <TooltipDark
+            title="Publishes to Admin display"
+            placement="right"
+            leaveDelay={500}
+            textSize={16}
+          >
+            <InfoIcon />
+          </TooltipDark>
+        </div>
       </div>
 
       <div className="infobox">
