@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Tooltip } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { TooltipDark } from "./SubComponents/CustomMUI";
 import InfoIcon from "@mui/icons-material/Info";
 import { SubmitButton, ToggleSwitch } from "./Inputs";
@@ -108,10 +108,12 @@ const DragDrop = ({
           <TooltipDark
             title="Publishes to Admin display"
             placement="right"
-            leaveDelay={500}
+            leaveDelay={200}
             textSize={16}
           >
-            <InfoIcon />
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
           </TooltipDark>
         </div>
       </div>
