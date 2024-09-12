@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { IconButton } from "@mui/material";
 import { TooltipDark } from "./SubComponents/CustomMUI";
 import InfoIcon from "@mui/icons-material/Info";
@@ -25,8 +25,7 @@ const DragDrop = ({
   setReset,
   reset,
 }) => {
-  const stagingUrl = "/slidemanager/api/upload";
-  const publishingUrl = "/slidemanager/api/publish";
+  const toggleRef = useRef(null);
 
   useEffect(() => {
     getImages().then((files) => {
@@ -98,13 +97,14 @@ const DragDrop = ({
               droppedFiles.filter((slide) => {
                 return slide.changesMade;
               }),
-              stagingUrl
+              true
             );
             setReset(true);
           }}
         />
         <div className="relative flex items-center justify-center">
-          <ToggleSwitch toggleLabel="Publish" />
+          <ToggleSwitch toggleLabel="Publish" toggleRef={toggleRef} />
+          {console.log(toggleRef.current.value)}
           <TooltipDark
             title="Publishes to Admin display"
             placement="right"

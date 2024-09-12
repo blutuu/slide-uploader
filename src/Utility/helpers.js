@@ -1,5 +1,8 @@
 import { Buffer } from "buffer";
 
+const stagingUrl = "/slidemanager/api/upload";
+const publishingUrl = "/slidemanager/api/publish";
+
 export const extractFileData = (file) => {
   if (file.kind !== "file") return {};
 
@@ -18,8 +21,11 @@ export const extractFileData = (file) => {
   return promise;
 };
 
-export const uploadFiles = (files, url) => {
+export const uploadFiles = (files, publish) => {
   let formData = new FormData();
+  const url = publish ? publishingUrl : stagingUrl;
+
+  console.log(url);
 
   if (files.length == 0) return;
 
@@ -33,23 +39,7 @@ export const uploadFiles = (files, url) => {
 
   console.log(formData.getAll("image_file"));
 
-  fetch(url, {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => {
-      // Checking whether the response is text or JSON
-      response.text().then((text) => {
-        try {
-          const data = JSON.parse(text);
-        } catch {
-          console.log(text);
-        }
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  uploadData(url, formData);
 };
 
 // A function that receives files from a server endpoint
@@ -210,6 +200,26 @@ export const setChangesMade = (image_file) => {
 
 export const removeChangesMade = (image_file) => {
   image_file.changesMade = false;
+};
+
+const uploadData = (url, formData) => {
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => {
+      // Checking whether the response is text or JSON
+      response.text().then((text) => {
+        try {
+          const data = JSON.parse(text);
+        } catch {
+          console.log(text);
+        }
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 function dataURItoBlob(dataURI) {

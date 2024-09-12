@@ -9,6 +9,12 @@ export const SubmitButton = ({ callback, buttonTitle = "Submit" }) => {
   );
 };
 
-export const ToggleSwitch = ({ toggleLabel = "Toggle" }) => {
-  return <FormControlLabel control={<Switch />} label={toggleLabel} />;
+export const ToggleSwitch = ({ toggleLabel = "Toggle", toggleRef }) => {
+  return (
+    <FormControlLabel
+      control={<Switch />}
+      label={toggleLabel}
+      inputRef={toggleRef}
+    />
+  );
 };
