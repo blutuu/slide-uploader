@@ -104,7 +104,7 @@ const DragDrop = ({
         />
         <div className="relative flex items-center justify-center">
           <ToggleSwitch toggleLabel="Publish" toggleRef={toggleRef} />
-          {console.log(toggleRef.current.value)}
+          {/* {console.log(toggleRef.current.value)} */}
           <TooltipDark
             title="Publishes to Admin display"
             placement="right"

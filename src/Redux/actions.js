@@ -12,6 +12,7 @@ import {
   UPDATE_SLIDE_POSITION,
   UPDATE_DELETED_SLIDES,
   SET_RESET,
+  SET_PUBLISH_TOGGLE,
 } from "./constants";
 
 export const setDrag = (value) => ({
@@ -76,5 +77,10 @@ export const setSlideDeleted = (value) => ({
 
 export const setReset = (value) => ({
   type: SET_RESET,
+  payload: value,
+});
+
+export const setPublishToggle = (value) => ({
+  type: SET_PUBLISH_TOGGLE,
   payload: value,
 });

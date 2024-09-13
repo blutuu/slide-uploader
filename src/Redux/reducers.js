@@ -11,6 +11,7 @@ import {
   UPDATE_SLIDE_POSITION,
   UPDATE_DELETED_SLIDES,
   SET_RESET,
+  SET_PUBLISH_TOGGLE,
 } from "./constants";
 
 const initialStateDragDrop = {
@@ -22,6 +23,7 @@ const initialStateDragDrop = {
   deletedFiles: [],
   selectedSlide: {},
   isSlideDeleted: false,
+  publishToggle: false,
   error: "",
   reset: false,
 };
@@ -73,6 +75,9 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
 
     case SET_RESET:
       return { ...state, filesAdded: 0, reset: action.payload };
+
+    case SET_PUBLISH_TOGGLE:
+      return { ...state, publishToggle: action.payload };
 
     default:
       return state;
