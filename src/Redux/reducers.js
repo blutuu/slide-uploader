@@ -77,7 +77,7 @@ export const slideReducer = (state = initialStateDragDrop, action = {}) => {
       return { ...state, filesAdded: 0, reset: action.payload };
 
     case SET_PUBLISH_TOGGLE:
-      return { ...state, publishToggle: action.payload };
+      return { ...state, publishToggle: !state.publishToggle };
 
     default:
       return state;

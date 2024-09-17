@@ -25,6 +25,7 @@ const DragDrop = ({
   setReset,
   reset,
   onSetPublish,
+  publishToggle,
 }) => {
   const toggleRef = useRef(null);
 
@@ -104,7 +105,11 @@ const DragDrop = ({
           }}
         />
         <div className="relative flex items-center justify-center">
-          <ToggleSwitch toggleLabel="Publish" toggleRef={toggleRef} />
+          <ToggleSwitch
+            toggleLabel="Publish"
+            toggleRef={toggleRef}
+            onSetPublish={onSetPublish}
+          />
           {/* {console.log(toggleRef.current.value)} */}
           <TooltipDark
             title="Publishes to Admin display"

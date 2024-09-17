@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch) => {
     onSlideSelection: (value) => dispatch(setSelectedSlide(value)),
     onDeleteSlide: (value) => dispatch(deleteSlide(value)),
     onSetReset: (value) => dispatch(setReset(value)),
-    onSetPublish: (value) => dispatch(setPublishToggle(value)),
+    onSetPublish: () => dispatch(setPublishToggle()),
   };
 };
 
@@ -64,6 +64,7 @@ function App({
   onSetReset,
   reset,
   onSetPublish,
+  publishToggle,
 }) {
   return (
     <div className="App" style={{ backgroundImage: `url(${bgimage})` }}>
@@ -81,6 +82,7 @@ function App({
         setReset={onSetReset}
         reset={reset}
         setPublish={onSetPublish}
+        publishToggle={publishToggle}
       >
         <SlideViewer
           droppedFiles={droppedFiles}

@@ -80,7 +80,6 @@ export const setReset = (value) => ({
   payload: value,
 });
 
-export const setPublishToggle = (value) => ({
+export const setPublishToggle = () => ({
   type: SET_PUBLISH_TOGGLE,
-  payload: value,
 });
