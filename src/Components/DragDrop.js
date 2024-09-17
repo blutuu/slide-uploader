@@ -24,6 +24,7 @@ const DragDrop = ({
   onSaveFiles,
   setReset,
   reset,
+  onSetPublish,
 }) => {
   const toggleRef = useRef(null);
 
