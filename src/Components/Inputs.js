@@ -21,6 +21,7 @@ export const ToggleSwitch = ({
       inputRef={toggleRef}
       onChange={() => {
         console.log(toggleRef.current.checked);
+        onSetPublish(toggleRef.current.checked);
       }}
     />
   );

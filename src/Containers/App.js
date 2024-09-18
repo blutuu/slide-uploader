@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch) => {
     onSlideSelection: (value) => dispatch(setSelectedSlide(value)),
     onDeleteSlide: (value) => dispatch(deleteSlide(value)),
     onSetReset: (value) => dispatch(setReset(value)),
-    onSetPublish: () => dispatch(setPublishToggle()),
+    onSetPublish: (value) => dispatch(setPublishToggle(value)),
   };
 };
 
@@ -81,7 +81,7 @@ function App({
         onSaveFiles={onSaveFiles}
         setReset={onSetReset}
         reset={reset}
-        setPublish={onSetPublish}
+        onSetPublish={onSetPublish}
         publishToggle={publishToggle}
       >
         <SlideViewer

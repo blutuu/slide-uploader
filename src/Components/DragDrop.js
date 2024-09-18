@@ -99,7 +99,7 @@ const DragDrop = ({
               droppedFiles.filter((slide) => {
                 return slide.changesMade;
               }),
-              true
+              publishToggle
             );
             setReset(true);
           }}
