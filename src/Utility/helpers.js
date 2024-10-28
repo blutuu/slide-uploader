@@ -1,5 +1,3 @@
-import { Buffer } from "buffer";
-
 const stagingUrl = "/slidemanager/api/upload";
 const publishingUrl = "/slidemanager/api/publish";
 
