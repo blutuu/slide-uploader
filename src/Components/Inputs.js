@@ -20,7 +20,6 @@ export const ToggleSwitch = ({
       label={toggleLabel}
       inputRef={toggleRef}
       onChange={() => {
-        console.log(toggleRef.current.checked);
         onSetPublish(toggleRef.current.checked);
       }}
     />
