@@ -32,7 +32,22 @@ const fileFilter = (req, file, cb) => {
 };
 
 // set up multer with a destination and filename
-const storage = multer.diskStorage({
+const stagingStore = multer.diskStorage({
+  // The file destination
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  // The file name with the original extension
+  filename: function (req, file, cb) {
+    const mimetype = file.mimetype;
+    const regex = /\/(.+)/;
+    const extension = mimetype.match(regex)[1];
+    // console.log(file);
+
+    cb(null, file.originalname.slice(0, -3) + extension);
+  },
+});
+const publishStore = multer.diskStorage({
   // The file destination
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -49,7 +64,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({
   fileFilter: fileFilter,
-  storage: storage,
+  storage: stagingStore,
+});
+const publish = multer({
+  fileFilter: fileFilter,
+  storage: publishStore,
 });
 
 app.use(
@@ -75,6 +94,12 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/api/upload", upload.array("image_file"), (req, res) => {
+  log.info("Uploading images", "Files successfully uploaded");
+  //console.log(req.files);
+
+  res.status(200).send("Files uploaded successfully");
+});
+app.post("/api/publish", upload.array("image_file"), (req, res) => {
   log.info("Uploading images", "Files successfully uploaded");
   //console.log(req.files);
 

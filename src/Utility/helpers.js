@@ -23,9 +23,6 @@ export const extractFileData = (file) => {
 
 export const uploadFiles = (files, publish) => {
   let formData = new FormData();
-  const url = publish ? publishingUrl : stagingUrl;
-
-  console.log(url);
 
   if (files.length == 0) return;
 
@@ -39,7 +36,9 @@ export const uploadFiles = (files, publish) => {
 
   console.log(formData.getAll("image_file"));
 
-  uploadData(url, formData);
+  uploadData(stagingUrl, formData);
+
+  if (publish) uploadData(publishingUrl, formData);
 };
 
 // A function that receives files from a server endpoint
